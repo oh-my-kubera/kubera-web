@@ -30,10 +30,10 @@ body:
     validations:
       required: false
   - type: input
-    id: core-issue
+    id: origin-issue
     attributes:
-      label: Related core issue
-      description: "Link to related kubera-core issue (optional)"
+      label: Origin issue
+      description: The issue that triggered this spec change
       placeholder: "oh-my-kubera/kubera-core#123"
     validations:
       required: false
