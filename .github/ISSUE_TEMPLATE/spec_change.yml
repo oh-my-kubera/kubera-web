@@ -1,0 +1,39 @@
+name: Spec Change
+description: Request a change to the API specification
+labels: ["spec-change"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Change summary
+      description: What needs to change in the API spec?
+    validations:
+      required: true
+  - type: textarea
+    id: endpoints
+    attributes:
+      label: Affected endpoints
+      description: Which endpoints are affected by this change?
+    validations:
+      required: true
+  - type: checkboxes
+    id: breaking
+    attributes:
+      label: Breaking change
+      options:
+        - label: This is a breaking change
+  - type: textarea
+    id: migration
+    attributes:
+      label: Migration notes
+      description: How should consumers migrate? (optional)
+    validations:
+      required: false
+  - type: input
+    id: core-issue
+    attributes:
+      label: Related core issue
+      description: "Link to related kubera-core issue (optional)"
+      placeholder: "oh-my-kubera/kubera-core#123"
+    validations:
+      required: false

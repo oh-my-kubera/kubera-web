@@ -1,0 +1,18 @@
+name: Enhancement
+description: Suggest an improvement or new feature
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear description of the enhancement
+    validations:
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation / use case
+      description: Why is this enhancement needed? What problem does it solve?
+    validations:
+      required: true
