@@ -60,8 +60,10 @@ async function api<T>(path: string, options?: RequestInit): Promise<T> {
 
 ## Connection State (lib/connection.ts)
 
+Web uses localStorage. The native app (React Native) will follow the same pattern with SecureStore.
+
 ```typescript
-// Stored in localStorage
+// Stored in localStorage (web) / SecureStore (native)
 interface ServerConnection {
   url: string;    // "https://xyz.trycloudflare.com" or "http://localhost:8000"
   token: string;  // API auth token

@@ -31,8 +31,13 @@ All API calls use the stored server URL. See `lib/connection.ts`.
 - Types generated from kubera-core's `openapi.json` via openapi-typescript
 - See [api-client.md](api-client.md) for generation workflow
 
+## Shared Code (lib/)
+
+Web and the future native app (React Native) do not share code directly.
+Both clients generate types independently from kubera-core's `openapi.json` (single source of truth) and follow the same design patterns (api client, connection state).
+
 ## State Management
 
 - Server connection: localStorage (persists across sessions)
-- API data: React Query (or SWR) for caching + revalidation
+- API data: TanStack Query for caching + revalidation
 - No global state library needed initially

@@ -17,7 +17,7 @@ None required. The backend URL is provided at runtime by the user (QR/pairing/di
 ## Build
 
 ```bash
-npm run build    # Next.js static + PWA service worker
+npm run build    # Next.js production build (includes type generation via prebuild)
 npm run start    # Local preview
 ```
 
