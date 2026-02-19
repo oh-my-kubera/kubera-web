@@ -18,43 +18,24 @@ npm run dev
 
 | Component | Library |
 |-----------|---------|
-| Framework | Next.js |
-| Styling | TailwindCSS |
+| Framework | Next.js 14 (App Router) |
+| Styling | TailwindCSS + shadcn/ui |
+| Data fetching | TanStack Query v5 |
 | Charts | Recharts |
 | Type generation | openapi-typescript |
 
 ## Project Structure
 
 ```
-kubera-web/
-├── src/
-│   ├── app/
-│   │   ├── page.tsx              # Main dashboard
-│   │   ├── connect/page.tsx      # Server connection (QR/pairing/direct)
-│   │   ├── assets/page.tsx       # Asset detail + trends
-│   │   ├── finance/page.tsx      # Bank/card transactions
-│   │   ├── backtest/page.tsx     # Backtest runner
-│   │   ├── strategy/page.tsx     # Strategy management
-│   │   └── trading/page.tsx      # Live trading monitor
-│   ├── components/
-│   │   ├── charts/
-│   │   ├── tables/
-│   │   └── layout/
-│   └── lib/
-│       ├── api.ts                # API client (dynamic server URL)
-│       ├── connection.ts         # Server connection state (localStorage)
-│       └── types/
-│           └── core.d.ts         # Generated from kubera-core openapi.json
-├── next.config.js
-├── package.json
-└── docs/
+src/
+├── app/            # Pages (App Router)
+├── components/     # UI components
+├── hooks/          # Custom React hooks
+└── lib/            # API client, connection, types
+specs/              # Pinned kubera-core openapi.json
 ```
 
-## Docs
-
-- [ARCHITECTURE.md](docs/ARCHITECTURE.md) — Frontend architecture, pages, state
-- [deployment.md](docs/deployment.md) — Vercel setup, domain, build
-- [api-client.md](docs/api-client.md) — Type generation, server connection
+Dev documentation lives in co-located `CONTEXT.md` files next to the code they describe.
 
 ## License
 
