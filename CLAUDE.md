@@ -4,6 +4,10 @@
 - `npm run dev` / `npm run build` / `npm run lint`
 - `npm run generate-types` to regenerate API types (runs automatically on prebuild)
 
+## Branches
+- `develop` — default branch, all PRs target here (including openapi.json updates)
+- `main` — production, Vercel auto-deploys
+
 ## Rules
 - Use `@/*` path alias (maps to `./src/*`)
 - API calls must use `api<T>()` from `@/lib/api` — never raw fetch
