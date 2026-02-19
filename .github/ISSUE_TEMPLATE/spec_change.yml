@@ -14,6 +14,7 @@ body:
     attributes:
       label: Affected endpoints
       description: Which endpoints are affected by this change?
+      placeholder: "GET /api/v1/users, POST /api/v1/users"
     validations:
       required: true
   - type: checkboxes
@@ -27,6 +28,7 @@ body:
     attributes:
       label: Migration notes
       description: How should consumers migrate? (optional)
+      placeholder: "Consumers need to update the request body to include..."
     validations:
       required: false
   - type: input
