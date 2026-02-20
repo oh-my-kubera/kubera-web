@@ -6,6 +6,7 @@ import {
   LayoutDashboard,
   Plug,
   Wallet,
+  Archive,
   Receipt,
   FlaskConical,
   Settings,
@@ -17,6 +18,7 @@ const navItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
   { href: "/connect", label: "Connect", icon: Plug },
   { href: "/assets", label: "Assets", icon: Wallet },
+  { href: "/snapshots", label: "Snapshots", icon: Archive },
   { href: "/finance", label: "Finance", icon: Receipt },
   { href: "/backtest", label: "Backtest", icon: FlaskConical },
   { href: "/strategy", label: "Strategy", icon: Settings },
@@ -35,7 +37,7 @@ export function Sidebar() {
 
       <nav className="flex-1 space-y-0.5 px-3 py-2">
         {navItems.map((item) => {
-          const isActive = pathname === item.href;
+          const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
           return (
             <Link
               key={item.href}
