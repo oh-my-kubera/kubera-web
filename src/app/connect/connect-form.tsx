@@ -48,10 +48,10 @@ export function ConnectForm() {
     <div className="mx-auto max-w-lg space-y-6">
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">
-          Connect Server
+          서버 연결
         </h1>
         <p className="text-sm text-muted-foreground">
-          Connect to a kubera-core server
+          kubera-core 서버에 연결합니다
         </p>
       </div>
 
@@ -64,7 +64,7 @@ export function ConnectForm() {
                 <Plug className="h-4 w-4 text-positive" />
               </div>
               <div>
-                <p className="text-sm font-medium">Connected</p>
+                <p className="text-sm font-medium">연결됨</p>
                 <p className="font-mono text-xs text-muted-foreground">
                   {connection.url}
                 </p>
@@ -72,7 +72,7 @@ export function ConnectForm() {
             </div>
             <Button variant="outline" size="sm" onClick={handleDisconnect}>
               <Unplug className="mr-2 h-4 w-4" />
-              Disconnect
+              연결 해제
             </Button>
           </div>
         </div>
@@ -81,11 +81,11 @@ export function ConnectForm() {
       {/* Connection Form */}
       <div className="rounded-lg border border-border bg-card p-5">
         <p className="mb-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-          {isConnected ? "Change Connection" : "New Connection"}
+          {isConnected ? "연결 변경" : "새 연결"}
         </p>
         <div className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="url">Server URL</Label>
+            <Label htmlFor="url">서버 URL</Label>
             <Input
               id="url"
               placeholder="http://localhost:8000"
@@ -97,11 +97,11 @@ export function ConnectForm() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="token">API Token</Label>
+            <Label htmlFor="token">API 토큰</Label>
             <Input
               id="token"
               type="password"
-              placeholder="Optional"
+              placeholder="선택사항"
               value={token}
               onChange={(e) => {
                 setToken(e.target.value);
@@ -116,17 +116,17 @@ export function ConnectForm() {
               {health.isLoading ? (
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Testing connection...
+                  연결 테스트 중...
                 </div>
               ) : health.data?.ok ? (
                 <div className="flex items-center gap-2 text-sm text-positive">
                   <CheckCircle2 className="h-4 w-4" />
-                  Connection successful
+                  연결 성공
                 </div>
               ) : (
                 <div className="flex items-center gap-2 text-sm text-destructive">
                   <XCircle className="h-4 w-4" />
-                  {health.data?.error ?? "Connection failed"}
+                  {health.data?.error ?? "연결 실패"}
                 </div>
               )}
             </div>
@@ -143,11 +143,11 @@ export function ConnectForm() {
                 {health.isLoading && (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 )}
-                Test Connection
+                연결 테스트
               </Button>
             ) : (
               <Button onClick={handleSave} className="flex-1" size="sm">
-                Save &amp; Connect
+                저장 및 연결
               </Button>
             )}
           </div>
@@ -158,7 +158,7 @@ export function ConnectForm() {
       {recentConnections.length > 0 && (
         <div className="rounded-lg border border-border bg-card p-5">
           <p className="mb-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            Recent Connections
+            최근 연결
           </p>
           <div className="space-y-2">
             {recentConnections.map((conn) => (

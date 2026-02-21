@@ -13,11 +13,11 @@ export function InvestmentTable({ entries }: InvestmentTableProps) {
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-border text-left text-xs text-muted-foreground">
-            <th className="pb-2 font-medium">Broker</th>
-            <th className="pb-2 font-medium">Product</th>
-            <th className="pb-2 text-right font-medium">Invested</th>
-            <th className="pb-2 text-right font-medium">Current</th>
-            <th className="pb-2 text-right font-medium">Return</th>
+            <th className="pb-2 font-medium">증권사</th>
+            <th className="pb-2 font-medium">상품</th>
+            <th className="pb-2 text-right font-medium">투자금</th>
+            <th className="pb-2 text-right font-medium">현재가</th>
+            <th className="pb-2 text-right font-medium">수익률</th>
           </tr>
         </thead>
         <tbody>

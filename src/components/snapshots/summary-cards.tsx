@@ -13,7 +13,7 @@ export function SummaryCards({ snapshot }: SummaryCardsProps) {
       {/* Accent card — Net Worth */}
       <div className="rounded-lg border border-border border-t-2 border-t-primary bg-card p-6">
         <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-          Net Worth
+          순자산
         </p>
         <p className="mt-2 font-mono text-4xl font-bold tracking-tight">
           {formatKRW(snapshot.net_worth)}
@@ -24,7 +24,7 @@ export function SummaryCards({ snapshot }: SummaryCardsProps) {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="rounded-lg border border-border bg-card p-5">
           <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            Total Assets
+            총 자산
           </p>
           <p className="mt-2 font-mono text-2xl font-semibold">
             {formatKRW(snapshot.total_assets)}
@@ -32,7 +32,7 @@ export function SummaryCards({ snapshot }: SummaryCardsProps) {
         </div>
         <div className="rounded-lg border border-border bg-card p-5">
           <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            Total Liabilities
+            총 부채
           </p>
           <p className="mt-2 font-mono text-2xl font-semibold">
             {formatKRW(snapshot.total_liabilities)}
@@ -40,7 +40,7 @@ export function SummaryCards({ snapshot }: SummaryCardsProps) {
         </div>
         <div className="rounded-lg border border-border bg-card p-5">
           <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            Credit Score
+            신용점수
           </p>
           <p className="mt-2 font-mono text-2xl font-semibold">
             {snapshot.credit_score ?? "\u2014"}

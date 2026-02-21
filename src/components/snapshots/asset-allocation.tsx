@@ -75,7 +75,7 @@ export function AssetAllocation({ entries }: AssetAllocationProps) {
                 borderRadius: "0.5rem",
                 fontSize: 12,
               }}
-              formatter={(value: number | undefined) => [formatKRW(value ?? 0), "Amount"]}
+              formatter={(value: number | undefined) => [formatKRW(value ?? 0), "금액"]}
             />
           </PieChart>
         </ResponsiveContainer>

@@ -13,11 +13,11 @@ export function InsuranceTable({ entries }: InsuranceTableProps) {
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-border text-left text-xs text-muted-foreground">
-            <th className="pb-2 font-medium">Insurer</th>
-            <th className="pb-2 font-medium">Product</th>
-            <th className="pb-2 font-medium">Status</th>
-            <th className="pb-2 text-right font-medium">Total Paid</th>
-            <th className="pb-2 text-right font-medium">Period</th>
+            <th className="pb-2 font-medium">보험사</th>
+            <th className="pb-2 font-medium">상품</th>
+            <th className="pb-2 font-medium">상태</th>
+            <th className="pb-2 text-right font-medium">납입액</th>
+            <th className="pb-2 text-right font-medium">기간</th>
           </tr>
         </thead>
         <tbody>

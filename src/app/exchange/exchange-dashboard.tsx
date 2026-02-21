@@ -18,11 +18,11 @@ function ExchangeContent() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold tracking-tight">Exchange</h1>
+      <h1 className="text-2xl font-bold tracking-tight">거래소</h1>
 
       <section className="rounded-lg border border-border bg-card p-6">
         <h2 className="mb-4 text-sm font-medium text-muted-foreground">
-          Upbit Balances
+          업비트 잔고
         </h2>
 
         {isLoading && (
@@ -48,13 +48,12 @@ function ErrorMessage({ error }: { error: Error }) {
   if (error instanceof ApiError && error.status === 400) {
     return (
       <p className="py-12 text-center text-sm text-muted-foreground">
-        Upbit credential not configured.
+        업비트 인증 정보가 설정되지 않았습니다.
         <br />
-        Run{" "}
         <code className="rounded bg-secondary px-1.5 py-0.5 text-xs">
           kubera-core credential add upbit
-        </code>{" "}
-        to set up your API keys.
+        </code>
+        으로 API 키를 등록하세요.
       </p>
     );
   }

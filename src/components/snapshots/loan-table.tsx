@@ -13,11 +13,11 @@ export function LoanTable({ entries }: LoanTableProps) {
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-border text-left text-xs text-muted-foreground">
-            <th className="pb-2 font-medium">Lender</th>
-            <th className="pb-2 font-medium">Product</th>
-            <th className="pb-2 text-right font-medium">Balance</th>
-            <th className="pb-2 text-right font-medium">Rate</th>
-            <th className="pb-2 text-right font-medium">End Date</th>
+            <th className="pb-2 font-medium">대출기관</th>
+            <th className="pb-2 font-medium">상품</th>
+            <th className="pb-2 text-right font-medium">잔액</th>
+            <th className="pb-2 text-right font-medium">금리</th>
+            <th className="pb-2 text-right font-medium">만기일</th>
           </tr>
         </thead>
         <tbody>

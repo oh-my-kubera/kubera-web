@@ -48,7 +48,7 @@ function SnapshotDetailContent({
   if (!data) {
     return (
       <div className="rounded-lg border border-border bg-card p-6 text-center text-muted-foreground">
-        Snapshot not found.
+        스냅샷을 찾을 수 없습니다.
       </div>
     );
   }
@@ -62,13 +62,13 @@ function SnapshotDetailContent({
           className="mb-3 inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to Snapshots
+          스냅샷 목록
         </Link>
         <h1 className="text-2xl font-semibold tracking-tight">
-          Snapshot — {formatDate(data.snapshot_date)}
+          스냅샷 — {formatDate(data.snapshot_date)}
         </h1>
         <p className="text-sm text-muted-foreground">
-          Source: {data.source}
+          출처: {data.source}
         </p>
       </div>
 
@@ -79,7 +79,7 @@ function SnapshotDetailContent({
       {data.asset_entries.length > 0 && (
         <div className="rounded-lg border border-border bg-card p-5">
           <p className="mb-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            Asset Allocation
+            자산 배분
           </p>
           <AssetAllocation entries={data.asset_entries} />
         </div>
@@ -89,7 +89,7 @@ function SnapshotDetailContent({
       {data.investment_entries.length > 0 && (
         <div className="rounded-lg border border-border bg-card p-5">
           <p className="mb-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            Investments
+            투자
           </p>
           <InvestmentTable entries={data.investment_entries} />
         </div>
@@ -99,7 +99,7 @@ function SnapshotDetailContent({
       {data.loan_entries.length > 0 && (
         <div className="rounded-lg border border-border bg-card p-5">
           <p className="mb-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            Loans
+            대출
           </p>
           <LoanTable entries={data.loan_entries} />
         </div>
@@ -109,7 +109,7 @@ function SnapshotDetailContent({
       {data.insurance_entries.length > 0 && (
         <div className="rounded-lg border border-border bg-card p-5">
           <p className="mb-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            Insurance
+            보험
           </p>
           <InsuranceTable entries={data.insurance_entries} />
         </div>

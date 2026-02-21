@@ -24,14 +24,14 @@ export function SnapshotsDashboard() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight">Snapshots</h1>
+            <h1 className="text-2xl font-semibold tracking-tight">스냅샷</h1>
             <p className="text-sm text-muted-foreground">
-              Financial snapshot history
+              재무 스냅샷 내역
             </p>
           </div>
           <Button onClick={() => setImportOpen(true)} size="sm">
             <Upload className="mr-2 h-4 w-4" />
-            Import
+            가져오기
           </Button>
         </div>
 

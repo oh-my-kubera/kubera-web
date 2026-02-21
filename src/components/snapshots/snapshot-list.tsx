@@ -13,7 +13,7 @@ export function SnapshotList({ items }: SnapshotListProps) {
     return (
       <div className="rounded-lg border border-border bg-card p-5">
         <p className="text-sm text-muted-foreground">
-          No snapshots yet. Import your first one above.
+          스냅샷이 없습니다. 위에서 첫 번째 스냅샷을 가져오세요.
         </p>
       </div>
     );
@@ -23,10 +23,10 @@ export function SnapshotList({ items }: SnapshotListProps) {
     <div className="rounded-lg border border-border bg-card p-5">
       <div className="flex items-center justify-between">
         <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-          History
+          내역
         </p>
         <span className="text-xs text-muted-foreground">
-          {items.length} snapshots
+          {items.length}개
         </span>
       </div>
       <div className="mt-4 space-y-3">

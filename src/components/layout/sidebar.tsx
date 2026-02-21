@@ -11,10 +11,10 @@ import {
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { href: "/", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/connect", label: "Connect", icon: Plug },
-  { href: "/snapshots", label: "Snapshots", icon: Archive },
-  { href: "/exchange", label: "Exchange", icon: ArrowLeftRight },
+  { href: "/", label: "대시보드", icon: LayoutDashboard },
+  { href: "/connect", label: "연결", icon: Plug },
+  { href: "/snapshots", label: "스냅샷", icon: Archive },
+  { href: "/exchange", label: "거래소", icon: ArrowLeftRight },
 ];
 
 export function Sidebar() {

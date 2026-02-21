@@ -29,7 +29,7 @@ export function NetWorthChart({ data }: NetWorthChartProps) {
   return (
     <div className="rounded-lg border border-border bg-card p-5">
       <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-        Net Worth Trend
+        순자산 추이
       </p>
       <div className="mt-4 h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
@@ -61,10 +61,10 @@ export function NetWorthChart({ data }: NetWorthChartProps) {
               formatter={(value: number | undefined, name: string | undefined) => {
                 const label =
                   name === "net_worth"
-                    ? "Net Worth"
+                    ? "순자산"
                     : name === "total_assets"
-                      ? "Assets"
-                      : "Liabilities";
+                      ? "자산"
+                      : "부채";
                 return [formatKRW(value ?? 0), label];
               }}
             />

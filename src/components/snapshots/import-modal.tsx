@@ -63,17 +63,17 @@ export function ImportModal({ open, onOpenChange }: ImportModalProps) {
   const errorMessage =
     mutation.error instanceof ApiError
       ? mutation.error.status === 409
-        ? "This snapshot date already exists."
+        ? "같은 날짜의 스냅샷이 이미 존재합니다."
         : mutation.error.message
       : mutation.error
-        ? "Upload failed. Please try again."
+        ? "업로드에 실패했습니다. 다시 시도해주세요."
         : null;
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Import Snapshot</DialogTitle>
+          <DialogTitle>스냅샷 가져오기</DialogTitle>
         </DialogHeader>
 
         {result ? (
@@ -81,7 +81,7 @@ export function ImportModal({ open, onOpenChange }: ImportModalProps) {
             <div className="flex items-center gap-3 rounded-lg border border-border bg-card p-4">
               <CheckCircle2 className="h-5 w-5 shrink-0 text-positive" />
               <div className="min-w-0">
-                <p className="text-sm font-medium">Import successful</p>
+                <p className="text-sm font-medium">가져오기 완료</p>
                 <p className="text-xs text-muted-foreground">
                   {formatDate(result.snapshot_date)}
                 </p>
@@ -89,20 +89,20 @@ export function ImportModal({ open, onOpenChange }: ImportModalProps) {
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="rounded-lg border border-border bg-card p-3">
-                <p className="text-xs text-muted-foreground">Net Worth</p>
+                <p className="text-xs text-muted-foreground">순자산</p>
                 <p className="font-mono text-sm font-semibold">
                   {formatKRW(result.net_worth)}
                 </p>
               </div>
               <div className="rounded-lg border border-border bg-card p-3">
-                <p className="text-xs text-muted-foreground">Total Assets</p>
+                <p className="text-xs text-muted-foreground">총 자산</p>
                 <p className="font-mono text-sm font-semibold">
                   {formatKRW(result.total_assets)}
                 </p>
               </div>
             </div>
             <Button className="w-full" onClick={() => handleOpenChange(false)}>
-              Done
+              확인
             </Button>
           </div>
         ) : (
@@ -127,7 +127,7 @@ export function ImportModal({ open, onOpenChange }: ImportModalProps) {
                     size="sm"
                     onClick={() => setFile(null)}
                   >
-                    Remove
+                    삭제
                   </Button>
                 </>
               ) : (
@@ -135,10 +135,10 @@ export function ImportModal({ open, onOpenChange }: ImportModalProps) {
                   <Upload className="h-8 w-8 text-muted-foreground" />
                   <div>
                     <p className="text-sm text-muted-foreground">
-                      Drag & drop your .xlsx file here
+                      .xlsx 파일을 여기에 드래그하세요
                     </p>
                     <label className="mt-1 cursor-pointer text-sm font-medium text-primary hover:underline">
-                      or browse
+                      또는 파일 선택
                       <input
                         type="file"
                         accept=".xlsx"
@@ -154,13 +154,13 @@ export function ImportModal({ open, onOpenChange }: ImportModalProps) {
             {/* Password */}
             <div>
               <label className="text-xs font-medium text-muted-foreground">
-                Password (optional)
+                비밀번호 (선택)
               </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter if file is encrypted"
+                placeholder="암호화된 파일인 경우 입력"
                 className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-ring"
               />
             </div>
@@ -179,7 +179,7 @@ export function ImportModal({ open, onOpenChange }: ImportModalProps) {
               onClick={handleSubmit}
               disabled={!file || mutation.isPending}
             >
-              {mutation.isPending ? "Importing..." : "Import"}
+              {mutation.isPending ? "가져오는 중..." : "가져오기"}
             </Button>
           </div>
         )}

@@ -15,7 +15,7 @@ export function BalanceTable({ balances }: BalanceTableProps) {
   if (filtered.length === 0) {
     return (
       <p className="py-12 text-center text-sm text-muted-foreground">
-        No balances found.
+        보유 자산이 없습니다.
       </p>
     );
   }
@@ -25,10 +25,10 @@ export function BalanceTable({ balances }: BalanceTableProps) {
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-border text-left text-xs text-muted-foreground">
-            <th className="pb-2 font-medium">Currency</th>
-            <th className="pb-2 text-right font-medium">Balance</th>
-            <th className="pb-2 text-right font-medium">Locked</th>
-            <th className="pb-2 text-right font-medium">Avg Buy Price</th>
+            <th className="pb-2 font-medium">통화</th>
+            <th className="pb-2 text-right font-medium">보유량</th>
+            <th className="pb-2 text-right font-medium">잠김</th>
+            <th className="pb-2 text-right font-medium">매수 평균가</th>
           </tr>
         </thead>
         <tbody>
