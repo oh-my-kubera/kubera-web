@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { sanitizeHeaderValue } from "@/lib/connection";
 
 interface HealthResult {
   ok: boolean;
@@ -14,8 +15,9 @@ export function useHealthCheck(
     queryKey: ["health", url, token],
     queryFn: async () => {
       try {
+        const safeToken = sanitizeHeaderValue(token);
         const res = await fetch(`${url}/api/v1/health`, {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${safeToken}` },
         });
         if (!res.ok) {
           return { ok: false, error: `HTTP ${res.status}` };
