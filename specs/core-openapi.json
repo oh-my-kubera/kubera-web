@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Kubera",
-    "version": "0.1.0"
+    "version": "0.2.1"
   },
   "paths": {
     "/api/v1/health": {
@@ -574,6 +574,36 @@
           }
         }
       }
+    },
+    "/api/v1/exchange/upbit/balances": {
+      "get": {
+        "tags": [
+          "exchange"
+        ],
+        "summary": "Get Upbit Balances",
+        "operationId": "get_upbit_balances_api_v1_exchange_upbit_balances_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/UpbitBalanceResponse"
+                  },
+                  "type": "array",
+                  "title": "Response Get Upbit Balances Api V1 Exchange Upbit Balances Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -642,7 +672,7 @@
         "properties": {
           "file": {
             "type": "string",
-            "format": "binary",
+            "contentMediaType": "application/octet-stream",
             "title": "File"
           }
         },
@@ -1288,6 +1318,44 @@
           "net_worth"
         ],
         "title": "TrendPointResponse"
+      },
+      "UpbitBalanceResponse": {
+        "properties": {
+          "currency": {
+            "type": "string",
+            "title": "Currency"
+          },
+          "balance": {
+            "type": "string",
+            "title": "Balance"
+          },
+          "locked": {
+            "type": "string",
+            "title": "Locked"
+          },
+          "avg_buy_price": {
+            "type": "string",
+            "title": "Avg Buy Price"
+          },
+          "avg_buy_price_modified": {
+            "type": "boolean",
+            "title": "Avg Buy Price Modified"
+          },
+          "unit_currency": {
+            "type": "string",
+            "title": "Unit Currency"
+          }
+        },
+        "type": "object",
+        "required": [
+          "currency",
+          "balance",
+          "locked",
+          "avg_buy_price",
+          "avg_buy_price_modified",
+          "unit_currency"
+        ],
+        "title": "UpbitBalanceResponse"
       },
       "ValidationError": {
         "properties": {
