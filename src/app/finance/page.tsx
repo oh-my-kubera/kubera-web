@@ -1,10 +1,16 @@
+import { ConnectionGuard } from "@/components/connection-guard";
+
 export default function FinancePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8">
-      <h1 className="text-4xl font-bold">Finance</h1>
-      <p className="mt-4 text-muted-foreground">
-        Bank and card transactions
-      </p>
-    </main>
+    <ConnectionGuard>
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">Finance</h1>
+          <p className="text-sm text-muted-foreground">
+            Bank and card transactions
+          </p>
+        </div>
+      </div>
+    </ConnectionGuard>
   );
 }

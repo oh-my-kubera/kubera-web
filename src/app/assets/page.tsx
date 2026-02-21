@@ -1,10 +1,16 @@
+import { ConnectionGuard } from "@/components/connection-guard";
+
 export default function AssetsPage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8">
-      <h1 className="text-4xl font-bold">Assets</h1>
-      <p className="mt-4 text-muted-foreground">
-        Per-account balances and trend graphs
-      </p>
-    </main>
+    <ConnectionGuard>
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">Assets</h1>
+          <p className="text-sm text-muted-foreground">
+            Per-account balances and trend graphs
+          </p>
+        </div>
+      </div>
+    </ConnectionGuard>
   );
 }
