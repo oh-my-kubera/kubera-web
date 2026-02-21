@@ -40,6 +40,7 @@ export function clearConnection(): void {
 }
 
 export function getRecentConnections(): ServerConnection[] {
+  if (typeof window === "undefined") return [];
   const raw = localStorage.getItem(RECENT_CONNECTIONS_KEY);
   if (!raw) return [];
   try {

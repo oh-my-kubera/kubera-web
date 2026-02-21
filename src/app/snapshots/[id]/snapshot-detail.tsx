@@ -9,6 +9,7 @@ import { AssetAllocation } from "@/components/snapshots/asset-allocation";
 import { InvestmentTable } from "@/components/snapshots/investment-table";
 import { LoanTable } from "@/components/snapshots/loan-table";
 import { InsuranceTable } from "@/components/snapshots/insurance-table";
+import { ConnectionGuard } from "@/components/connection-guard";
 
 interface SnapshotDetailProps {
   id: number;
@@ -17,6 +18,20 @@ interface SnapshotDetailProps {
 export function SnapshotDetail({ id }: SnapshotDetailProps) {
   const { data, isLoading } = useSnapshotDetail(id);
 
+  return (
+    <ConnectionGuard>
+      <SnapshotDetailContent data={data} isLoading={isLoading} />
+    </ConnectionGuard>
+  );
+}
+
+function SnapshotDetailContent({
+  data,
+  isLoading,
+}: {
+  data: ReturnType<typeof useSnapshotDetail>["data"];
+  isLoading: boolean;
+}) {
   if (isLoading) {
     return (
       <div className="space-y-4">
