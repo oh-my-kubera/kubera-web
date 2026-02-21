@@ -10,11 +10,6 @@ App Router pages. Each route is a directory with `page.tsx`.
 | `/connect` | Server connection form (URL + token, test, save) | localStorage only |
 | `/snapshots` | Snapshot list, import modal, trend chart | Snapshot APIs via ConnectionGuard |
 | `/snapshots/[id]` | Single snapshot detail (summary, tables, charts) | Snapshot detail API |
-| `/assets` | Per-account balances (placeholder) | ConnectionGuard |
-| `/finance` | Bank/card transactions (placeholder) | ConnectionGuard |
-| `/backtest` | Strategy backtesting (placeholder) | ConnectionGuard |
-| `/strategy` | Strategy management (placeholder) | ConnectionGuard |
-| `/trading` | Live trading (placeholder) | ConnectionGuard |
 
 ## Patterns
 

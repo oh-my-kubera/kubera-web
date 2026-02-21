@@ -9,7 +9,7 @@ All hooks are client-side. Two patterns: localStorage reactive state and TanStac
 
 ## Data hooks (TanStack Query)
 
-- `use-assets.ts` — `useAssetSummary()` fetches `/api/v1/assets/summary`
+- `use-assets.ts` — `useAssetSummary()` fetches asset summary for Dashboard
 - `use-snapshots.ts` — Snapshot list and detail queries
 - `use-import-snapshot.ts` — File upload mutation for snapshot import
 

@@ -5,24 +5,14 @@ import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   Plug,
-  Wallet,
   Archive,
-  Receipt,
-  FlaskConical,
-  Settings,
-  Activity,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
   { href: "/connect", label: "Connect", icon: Plug },
-  { href: "/assets", label: "Assets", icon: Wallet },
   { href: "/snapshots", label: "Snapshots", icon: Archive },
-  { href: "/finance", label: "Finance", icon: Receipt },
-  { href: "/backtest", label: "Backtest", icon: FlaskConical },
-  { href: "/strategy", label: "Strategy", icon: Settings },
-  { href: "/trading", label: "Trading", icon: Activity },
 ];
 
 export function Sidebar() {
