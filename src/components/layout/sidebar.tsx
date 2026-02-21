@@ -6,6 +6,7 @@ import {
   LayoutDashboard,
   Plug,
   Archive,
+  ArrowLeftRight,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -13,6 +14,7 @@ const navItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
   { href: "/connect", label: "Connect", icon: Plug },
   { href: "/snapshots", label: "Snapshots", icon: Archive },
+  { href: "/exchange", label: "Exchange", icon: ArrowLeftRight },
 ];
 
 export function Sidebar() {
