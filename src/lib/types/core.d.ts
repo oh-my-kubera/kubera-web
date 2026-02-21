@@ -21,134 +21,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/assets/summary": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Summary */
-        get: operations["get_summary_api_v1_assets_summary_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/assets": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List Assets */
-        get: operations["list_assets_api_v1_assets_get"];
-        put?: never;
-        /** Create Asset */
-        post: operations["create_asset_api_v1_assets_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/assets/{asset_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Asset */
-        get: operations["get_asset_api_v1_assets__asset_id__get"];
-        /** Update Asset */
-        put: operations["update_asset_api_v1_assets__asset_id__put"];
-        post?: never;
-        /** Delete Asset */
-        delete: operations["delete_asset_api_v1_assets__asset_id__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/credentials": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List Credentials
-         * @description List credentials with status only — no keys exposed.
-         */
-        get: operations["list_credentials_api_v1_credentials_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/credentials/{provider}/sync": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Trigger Sync
-         * @description Trigger sync for a provider (placeholder).
-         */
-        post: operations["trigger_sync_api_v1_credentials__provider__sync_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/finance/bank": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List Bank Transactions */
-        get: operations["list_bank_transactions_api_v1_finance_bank_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/finance/card": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List Card Transactions */
-        get: operations["list_card_transactions_api_v1_finance_card_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/v1/snapshots/import": {
         parameters: {
             query?: never;
@@ -217,6 +89,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/snapshots/{snapshot_id}/ledger": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Ledger Entries */
+        get: operations["get_ledger_entries_api_v1_snapshots__snapshot_id__ledger_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/snapshots/{snapshot_id}": {
         parameters: {
             query?: never;
@@ -235,27 +124,69 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/snapshots/{snapshot_id}/assets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add Asset Entry */
+        post: operations["add_asset_entry_api_v1_snapshots__snapshot_id__assets_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/snapshots/{snapshot_id}/assets/{entry_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete Asset Entry */
+        delete: operations["delete_asset_entry_api_v1_snapshots__snapshot_id__assets__entry_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exchange/upbit/balances": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Upbit Balances */
+        get: operations["get_upbit_balances_api_v1_exchange_upbit_balances_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        /** AssetCreate */
-        AssetCreate: {
-            /** Name */
-            name: string;
-            type: components["schemas"]["AssetType"];
-            /**
-             * Institution
-             * @default
-             */
-            institution: string;
-            /**
-             * Balance
-             * @default 0
-             */
-            balance: number | string;
-            /** @default KRW */
-            currency: components["schemas"]["Currency"];
+        /** AssetEntryCreate */
+        AssetEntryCreate: {
+            /** Category */
+            category: string;
+            /** Product Name */
+            product_name: string;
+            /** Amount */
+            amount: number | string;
         };
         /** AssetEntryResponse */
         AssetEntryResponse: {
@@ -268,121 +199,10 @@ export interface components {
             /** Amount */
             amount: string;
         };
-        /** AssetResponse */
-        AssetResponse: {
-            /** Id */
-            id: number;
-            /** User Id */
-            user_id: string;
-            /** Name */
-            name: string;
-            type: components["schemas"]["AssetType"];
-            /** Institution */
-            institution: string;
-            /** Balance */
-            balance: string;
-            currency: components["schemas"]["Currency"];
-            /** Last Synced */
-            last_synced: string | null;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /**
-             * Updated At
-             * Format: date-time
-             */
-            updated_at: string;
-        };
-        /** AssetSummary */
-        AssetSummary: {
-            /** Total Krw */
-            total_krw: string;
-            /** Total Usd */
-            total_usd: string;
-            /** Breakdown */
-            breakdown: {
-                [key: string]: string;
-            };
-        };
-        /**
-         * AssetType
-         * @enum {string}
-         */
-        AssetType: "BANK" | "STOCK" | "CRYPTO" | "CARD" | "CASH";
-        /** AssetUpdate */
-        AssetUpdate: {
-            /** Name */
-            name?: string | null;
-            type?: components["schemas"]["AssetType"] | null;
-            /** Institution */
-            institution?: string | null;
-            /** Balance */
-            balance?: number | string | null;
-            currency?: components["schemas"]["Currency"] | null;
-        };
-        /** BankTransactionResponse */
-        BankTransactionResponse: {
-            /** Id */
-            id: number;
-            /** User Id */
-            user_id: string;
-            /** Asset Id */
-            asset_id: number;
-            /**
-             * Date
-             * Format: date-time
-             */
-            date: string;
-            /** Description */
-            description: string;
-            /** Amount */
-            amount: string;
-            /** Balance After */
-            balance_after: string;
-            /** Category */
-            category: string;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-        };
         /** Body_import_snapshot_api_v1_snapshots_import_post */
         Body_import_snapshot_api_v1_snapshots_import_post: {
-            /**
-             * File
-             * Format: binary
-             */
+            /** File */
             file: string;
-        };
-        /** CardTransactionResponse */
-        CardTransactionResponse: {
-            /** Id */
-            id: number;
-            /** User Id */
-            user_id: string;
-            /** Asset Id */
-            asset_id: number;
-            /**
-             * Date
-             * Format: date-time
-             */
-            date: string;
-            /** Merchant */
-            merchant: string;
-            /** Amount */
-            amount: string;
-            /** Category */
-            category: string;
-            /** Installment */
-            installment: number;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
         };
         /** CompareResponse */
         CompareResponse: {
@@ -398,22 +218,6 @@ export interface components {
             to_date: string;
             diff: components["schemas"]["SnapshotDiff"];
         };
-        /** CredentialStatus */
-        CredentialStatus: {
-            /** Id */
-            id: number;
-            /** Provider */
-            provider: string;
-            /** Is Active */
-            is_active: boolean;
-            /** Last Synced At */
-            last_synced_at: string | null;
-        };
-        /**
-         * Currency
-         * @enum {string}
-         */
-        Currency: "KRW" | "USD";
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
@@ -451,6 +255,34 @@ export interface components {
             /** Return Rate */
             return_rate: string | null;
         };
+        /** LedgerEntryResponse */
+        LedgerEntryResponse: {
+            /** Id */
+            id: number;
+            /**
+             * Entry Date
+             * Format: date
+             */
+            entry_date: string;
+            /** Entry Time */
+            entry_time: string | null;
+            /** Entry Type */
+            entry_type: string;
+            /** Major Category */
+            major_category: string;
+            /** Minor Category */
+            minor_category: string | null;
+            /** Description */
+            description: string | null;
+            /** Amount */
+            amount: string;
+            /** Currency */
+            currency: string;
+            /** Payment Method */
+            payment_method: string | null;
+            /** Memo */
+            memo: string | null;
+        };
         /** LoanEntryResponse */
         LoanEntryResponse: {
             /** Id */
@@ -470,36 +302,10 @@ export interface components {
             /** End Date */
             end_date: string | null;
         };
-        /** PaginatedResponse[AssetResponse] */
-        PaginatedResponse_AssetResponse_: {
+        /** PaginatedResponse[LedgerEntryResponse] */
+        PaginatedResponse_LedgerEntryResponse_: {
             /** Items */
-            items: components["schemas"]["AssetResponse"][];
-            /** Total */
-            total: number;
-            /** Page */
-            page: number;
-            /** Size */
-            size: number;
-            /** Pages */
-            pages: number;
-        };
-        /** PaginatedResponse[BankTransactionResponse] */
-        PaginatedResponse_BankTransactionResponse_: {
-            /** Items */
-            items: components["schemas"]["BankTransactionResponse"][];
-            /** Total */
-            total: number;
-            /** Page */
-            page: number;
-            /** Size */
-            size: number;
-            /** Pages */
-            pages: number;
-        };
-        /** PaginatedResponse[CardTransactionResponse] */
-        PaginatedResponse_CardTransactionResponse_: {
-            /** Items */
-            items: components["schemas"]["CardTransactionResponse"][];
+            items: components["schemas"]["LedgerEntryResponse"][];
             /** Total */
             total: number;
             /** Page */
@@ -556,6 +362,8 @@ export interface components {
             loan_entries: components["schemas"]["LoanEntryResponse"][];
             /** Insurance Entries */
             insurance_entries: components["schemas"]["InsuranceEntryResponse"][];
+            /** Ledger Entries */
+            ledger_entries: components["schemas"]["LedgerEntryResponse"][];
         };
         /** SnapshotDiff */
         SnapshotDiff: {
@@ -595,15 +403,6 @@ export interface components {
              */
             created_at: string;
         };
-        /** SyncTriggerResponse */
-        SyncTriggerResponse: {
-            /** Provider */
-            provider: string;
-            /** Status */
-            status: string;
-            /** Message */
-            message: string;
-        };
         /** TrendPointResponse */
         TrendPointResponse: {
             /**
@@ -619,6 +418,21 @@ export interface components {
             total_liabilities: string;
             /** Net Worth */
             net_worth: string;
+        };
+        /** UpbitBalanceResponse */
+        UpbitBalanceResponse: {
+            /** Currency */
+            currency: string;
+            /** Balance */
+            balance: string;
+            /** Locked */
+            locked: string;
+            /** Avg Buy Price */
+            avg_buy_price: string;
+            /** Avg Buy Price Modified */
+            avg_buy_price_modified: boolean;
+            /** Unit Currency */
+            unit_currency: string;
         };
         /** ValidationError */
         ValidationError: {
@@ -658,309 +472,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
-                };
-            };
-        };
-    };
-    get_summary_api_v1_assets_summary_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AssetSummary"];
-                };
-            };
-        };
-    };
-    list_assets_api_v1_assets_get: {
-        parameters: {
-            query?: {
-                page?: number;
-                size?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PaginatedResponse_AssetResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    create_asset_api_v1_assets_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["AssetCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AssetResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_asset_api_v1_assets__asset_id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                asset_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AssetResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    update_asset_api_v1_assets__asset_id__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                asset_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["AssetUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["AssetResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_asset_api_v1_assets__asset_id__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                asset_id: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            204: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_credentials_api_v1_credentials_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CredentialStatus"][];
-                };
-            };
-        };
-    };
-    trigger_sync_api_v1_credentials__provider__sync_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                provider: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SyncTriggerResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_bank_transactions_api_v1_finance_bank_get: {
-        parameters: {
-            query?: {
-                asset_id?: number | null;
-                start?: string | null;
-                end?: string | null;
-                category?: string | null;
-                page?: number;
-                size?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PaginatedResponse_BankTransactionResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_card_transactions_api_v1_finance_card_get: {
-        parameters: {
-            query?: {
-                asset_id?: number | null;
-                start?: string | null;
-                end?: string | null;
-                category?: string | null;
-                page?: number;
-                size?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PaginatedResponse_CardTransactionResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -1098,6 +609,40 @@ export interface operations {
             };
         };
     };
+    get_ledger_entries_api_v1_snapshots__snapshot_id__ledger_get: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path: {
+                snapshot_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedResponse_LedgerEntryResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_snapshot_api_v1_snapshots__snapshot_id__get: {
         parameters: {
             query?: never;
@@ -1154,6 +699,91 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_asset_entry_api_v1_snapshots__snapshot_id__assets_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                snapshot_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssetEntryCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AssetEntryResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_asset_entry_api_v1_snapshots__snapshot_id__assets__entry_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                snapshot_id: number;
+                entry_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_upbit_balances_api_v1_exchange_upbit_balances_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UpbitBalanceResponse"][];
                 };
             };
         };
