@@ -21,610 +21,6 @@
         }
       }
     },
-    "/api/v1/assets/summary": {
-      "get": {
-        "tags": [
-          "assets"
-        ],
-        "summary": "Get Summary",
-        "operationId": "get_summary_api_v1_assets_summary_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AssetSummary"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/api/v1/assets": {
-      "get": {
-        "tags": [
-          "assets"
-        ],
-        "summary": "List Assets",
-        "operationId": "list_assets_api_v1_assets_get",
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "page",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "default": 1,
-              "title": "Page"
-            }
-          },
-          {
-            "name": "size",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "maximum": 100,
-              "minimum": 1,
-              "default": 20,
-              "title": "Size"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PaginatedResponse_AssetResponse_"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "assets"
-        ],
-        "summary": "Create Asset",
-        "operationId": "create_asset_api_v1_assets_post",
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AssetCreate"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AssetResponse"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/assets/{asset_id}": {
-      "get": {
-        "tags": [
-          "assets"
-        ],
-        "summary": "Get Asset",
-        "operationId": "get_asset_api_v1_assets__asset_id__get",
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "asset_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "title": "Asset Id"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AssetResponse"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "assets"
-        ],
-        "summary": "Update Asset",
-        "operationId": "update_asset_api_v1_assets__asset_id__put",
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "asset_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "title": "Asset Id"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AssetUpdate"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AssetResponse"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "assets"
-        ],
-        "summary": "Delete Asset",
-        "operationId": "delete_asset_api_v1_assets__asset_id__delete",
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "asset_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "title": "Asset Id"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Successful Response"
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/credentials": {
-      "get": {
-        "tags": [
-          "credentials"
-        ],
-        "summary": "List Credentials",
-        "description": "List credentials with status only \u2014 no keys exposed.",
-        "operationId": "list_credentials_api_v1_credentials_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/CredentialStatus"
-                  },
-                  "type": "array",
-                  "title": "Response List Credentials Api V1 Credentials Get"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
-    },
-    "/api/v1/credentials/{provider}/sync": {
-      "post": {
-        "tags": [
-          "credentials"
-        ],
-        "summary": "Trigger Sync",
-        "description": "Trigger sync for a provider (placeholder).",
-        "operationId": "trigger_sync_api_v1_credentials__provider__sync_post",
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "provider",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Provider"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SyncTriggerResponse"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/finance/bank": {
-      "get": {
-        "tags": [
-          "finance"
-        ],
-        "summary": "List Bank Transactions",
-        "operationId": "list_bank_transactions_api_v1_finance_bank_get",
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "asset_id",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "integer"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Asset Id"
-            }
-          },
-          {
-            "name": "start",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Start"
-            }
-          },
-          {
-            "name": "end",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "End"
-            }
-          },
-          {
-            "name": "category",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Category"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "default": 1,
-              "title": "Page"
-            }
-          },
-          {
-            "name": "size",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "maximum": 100,
-              "minimum": 1,
-              "default": 20,
-              "title": "Size"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PaginatedResponse_BankTransactionResponse_"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/finance/card": {
-      "get": {
-        "tags": [
-          "finance"
-        ],
-        "summary": "List Card Transactions",
-        "operationId": "list_card_transactions_api_v1_finance_card_get",
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "asset_id",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "integer"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Asset Id"
-            }
-          },
-          {
-            "name": "start",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Start"
-            }
-          },
-          {
-            "name": "end",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "End"
-            }
-          },
-          {
-            "name": "category",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Category"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "default": 1,
-              "title": "Page"
-            }
-          },
-          {
-            "name": "size",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "maximum": 100,
-              "minimum": 1,
-              "default": 20,
-              "title": "Size"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PaginatedResponse_CardTransactionResponse_"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/v1/snapshots/import": {
       "post": {
         "tags": [
@@ -918,6 +314,76 @@
         }
       }
     },
+    "/api/v1/snapshots/{snapshot_id}/ledger": {
+      "get": {
+        "tags": [
+          "snapshots"
+        ],
+        "summary": "Get Ledger Entries",
+        "operationId": "get_ledger_entries_api_v1_snapshots__snapshot_id__ledger_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "snapshot_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Snapshot Id"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 50,
+              "title": "Size"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResponse_LedgerEntryResponse_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/snapshots/{snapshot_id}": {
       "get": {
         "tags": [
@@ -1002,25 +468,127 @@
           }
         }
       }
+    },
+    "/api/v1/snapshots/{snapshot_id}/assets": {
+      "post": {
+        "tags": [
+          "snapshots"
+        ],
+        "summary": "Add Asset Entry",
+        "operationId": "add_asset_entry_api_v1_snapshots__snapshot_id__assets_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "snapshot_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Snapshot Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssetEntryCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetEntryResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/snapshots/{snapshot_id}/assets/{entry_id}": {
+      "delete": {
+        "tags": [
+          "snapshots"
+        ],
+        "summary": "Delete Asset Entry",
+        "operationId": "delete_asset_entry_api_v1_snapshots__snapshot_id__assets__entry_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "snapshot_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Snapshot Id"
+            }
+          },
+          {
+            "name": "entry_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Entry Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
-      "AssetCreate": {
+      "AssetEntryCreate": {
         "properties": {
-          "name": {
+          "category": {
             "type": "string",
-            "title": "Name"
+            "title": "Category"
           },
-          "type": {
-            "$ref": "#/components/schemas/AssetType"
-          },
-          "institution": {
+          "product_name": {
             "type": "string",
-            "title": "Institution",
-            "default": ""
+            "title": "Product Name"
           },
-          "balance": {
+          "amount": {
             "anyOf": [
               {
                 "type": "number"
@@ -1030,20 +598,16 @@
                 "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
               }
             ],
-            "title": "Balance",
-            "default": "0"
-          },
-          "currency": {
-            "$ref": "#/components/schemas/Currency",
-            "default": "KRW"
+            "title": "Amount"
           }
         },
         "type": "object",
         "required": [
-          "name",
-          "type"
+          "category",
+          "product_name",
+          "amount"
         ],
-        "title": "AssetCreate"
+        "title": "AssetEntryCreate"
       },
       "AssetEntryResponse": {
         "properties": {
@@ -1074,233 +638,6 @@
         ],
         "title": "AssetEntryResponse"
       },
-      "AssetResponse": {
-        "properties": {
-          "id": {
-            "type": "integer",
-            "title": "Id"
-          },
-          "user_id": {
-            "type": "string",
-            "title": "User Id"
-          },
-          "name": {
-            "type": "string",
-            "title": "Name"
-          },
-          "type": {
-            "$ref": "#/components/schemas/AssetType"
-          },
-          "institution": {
-            "type": "string",
-            "title": "Institution"
-          },
-          "balance": {
-            "type": "string",
-            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
-            "title": "Balance"
-          },
-          "currency": {
-            "$ref": "#/components/schemas/Currency"
-          },
-          "last_synced": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Last Synced"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Created At"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Updated At"
-          }
-        },
-        "type": "object",
-        "required": [
-          "id",
-          "user_id",
-          "name",
-          "type",
-          "institution",
-          "balance",
-          "currency",
-          "last_synced",
-          "created_at",
-          "updated_at"
-        ],
-        "title": "AssetResponse"
-      },
-      "AssetSummary": {
-        "properties": {
-          "total_krw": {
-            "type": "string",
-            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
-            "title": "Total Krw"
-          },
-          "total_usd": {
-            "type": "string",
-            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
-            "title": "Total Usd"
-          },
-          "breakdown": {
-            "additionalProperties": {
-              "type": "string",
-              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
-            },
-            "type": "object",
-            "title": "Breakdown"
-          }
-        },
-        "type": "object",
-        "required": [
-          "total_krw",
-          "total_usd",
-          "breakdown"
-        ],
-        "title": "AssetSummary"
-      },
-      "AssetType": {
-        "type": "string",
-        "enum": [
-          "BANK",
-          "STOCK",
-          "CRYPTO",
-          "CARD",
-          "CASH"
-        ],
-        "title": "AssetType"
-      },
-      "AssetUpdate": {
-        "properties": {
-          "name": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Name"
-          },
-          "type": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/AssetType"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "institution": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Institution"
-          },
-          "balance": {
-            "anyOf": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "string",
-                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Balance"
-          },
-          "currency": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/Currency"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        },
-        "type": "object",
-        "title": "AssetUpdate"
-      },
-      "BankTransactionResponse": {
-        "properties": {
-          "id": {
-            "type": "integer",
-            "title": "Id"
-          },
-          "user_id": {
-            "type": "string",
-            "title": "User Id"
-          },
-          "asset_id": {
-            "type": "integer",
-            "title": "Asset Id"
-          },
-          "date": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Date"
-          },
-          "description": {
-            "type": "string",
-            "title": "Description"
-          },
-          "amount": {
-            "type": "string",
-            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
-            "title": "Amount"
-          },
-          "balance_after": {
-            "type": "string",
-            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
-            "title": "Balance After"
-          },
-          "category": {
-            "type": "string",
-            "title": "Category"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Created At"
-          }
-        },
-        "type": "object",
-        "required": [
-          "id",
-          "user_id",
-          "asset_id",
-          "date",
-          "description",
-          "amount",
-          "balance_after",
-          "category",
-          "created_at"
-        ],
-        "title": "BankTransactionResponse"
-      },
       "Body_import_snapshot_api_v1_snapshots_import_post": {
         "properties": {
           "file": {
@@ -1314,62 +651,6 @@
           "file"
         ],
         "title": "Body_import_snapshot_api_v1_snapshots_import_post"
-      },
-      "CardTransactionResponse": {
-        "properties": {
-          "id": {
-            "type": "integer",
-            "title": "Id"
-          },
-          "user_id": {
-            "type": "string",
-            "title": "User Id"
-          },
-          "asset_id": {
-            "type": "integer",
-            "title": "Asset Id"
-          },
-          "date": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Date"
-          },
-          "merchant": {
-            "type": "string",
-            "title": "Merchant"
-          },
-          "amount": {
-            "type": "string",
-            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
-            "title": "Amount"
-          },
-          "category": {
-            "type": "string",
-            "title": "Category"
-          },
-          "installment": {
-            "type": "integer",
-            "title": "Installment"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Created At"
-          }
-        },
-        "type": "object",
-        "required": [
-          "id",
-          "user_id",
-          "asset_id",
-          "date",
-          "merchant",
-          "amount",
-          "category",
-          "installment",
-          "created_at"
-        ],
-        "title": "CardTransactionResponse"
       },
       "CompareResponse": {
         "properties": {
@@ -1394,50 +675,6 @@
           "diff"
         ],
         "title": "CompareResponse"
-      },
-      "CredentialStatus": {
-        "properties": {
-          "id": {
-            "type": "integer",
-            "title": "Id"
-          },
-          "provider": {
-            "type": "string",
-            "title": "Provider"
-          },
-          "is_active": {
-            "type": "boolean",
-            "title": "Is Active"
-          },
-          "last_synced_at": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Last Synced At"
-          }
-        },
-        "type": "object",
-        "required": [
-          "id",
-          "provider",
-          "is_active",
-          "last_synced_at"
-        ],
-        "title": "CredentialStatus"
-      },
-      "Currency": {
-        "type": "string",
-        "enum": [
-          "KRW",
-          "USD"
-        ],
-        "title": "Currency"
       },
       "HTTPValidationError": {
         "properties": {
@@ -1560,6 +797,107 @@
         ],
         "title": "InvestmentEntryResponse"
       },
+      "LedgerEntryResponse": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "entry_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Entry Date"
+          },
+          "entry_time": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Entry Time"
+          },
+          "entry_type": {
+            "type": "string",
+            "title": "Entry Type"
+          },
+          "major_category": {
+            "type": "string",
+            "title": "Major Category"
+          },
+          "minor_category": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Minor Category"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "amount": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Amount"
+          },
+          "currency": {
+            "type": "string",
+            "title": "Currency"
+          },
+          "payment_method": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Payment Method"
+          },
+          "memo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Memo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "entry_date",
+          "entry_time",
+          "entry_type",
+          "major_category",
+          "minor_category",
+          "description",
+          "amount",
+          "currency",
+          "payment_method",
+          "memo"
+        ],
+        "title": "LedgerEntryResponse"
+      },
       "LoanEntryResponse": {
         "properties": {
           "id": {
@@ -1634,11 +972,11 @@
         ],
         "title": "LoanEntryResponse"
       },
-      "PaginatedResponse_AssetResponse_": {
+      "PaginatedResponse_LedgerEntryResponse_": {
         "properties": {
           "items": {
             "items": {
-              "$ref": "#/components/schemas/AssetResponse"
+              "$ref": "#/components/schemas/LedgerEntryResponse"
             },
             "type": "array",
             "title": "Items"
@@ -1668,79 +1006,7 @@
           "size",
           "pages"
         ],
-        "title": "PaginatedResponse[AssetResponse]"
-      },
-      "PaginatedResponse_BankTransactionResponse_": {
-        "properties": {
-          "items": {
-            "items": {
-              "$ref": "#/components/schemas/BankTransactionResponse"
-            },
-            "type": "array",
-            "title": "Items"
-          },
-          "total": {
-            "type": "integer",
-            "title": "Total"
-          },
-          "page": {
-            "type": "integer",
-            "title": "Page"
-          },
-          "size": {
-            "type": "integer",
-            "title": "Size"
-          },
-          "pages": {
-            "type": "integer",
-            "title": "Pages"
-          }
-        },
-        "type": "object",
-        "required": [
-          "items",
-          "total",
-          "page",
-          "size",
-          "pages"
-        ],
-        "title": "PaginatedResponse[BankTransactionResponse]"
-      },
-      "PaginatedResponse_CardTransactionResponse_": {
-        "properties": {
-          "items": {
-            "items": {
-              "$ref": "#/components/schemas/CardTransactionResponse"
-            },
-            "type": "array",
-            "title": "Items"
-          },
-          "total": {
-            "type": "integer",
-            "title": "Total"
-          },
-          "page": {
-            "type": "integer",
-            "title": "Page"
-          },
-          "size": {
-            "type": "integer",
-            "title": "Size"
-          },
-          "pages": {
-            "type": "integer",
-            "title": "Pages"
-          }
-        },
-        "type": "object",
-        "required": [
-          "items",
-          "total",
-          "page",
-          "size",
-          "pages"
-        ],
-        "title": "PaginatedResponse[CardTransactionResponse]"
+        "title": "PaginatedResponse[LedgerEntryResponse]"
       },
       "PaginatedResponse_SnapshotSummaryResponse_": {
         "properties": {
@@ -1855,6 +1121,13 @@
             },
             "type": "array",
             "title": "Insurance Entries"
+          },
+          "ledger_entries": {
+            "items": {
+              "$ref": "#/components/schemas/LedgerEntryResponse"
+            },
+            "type": "array",
+            "title": "Ledger Entries"
           }
         },
         "type": "object",
@@ -1871,7 +1144,8 @@
           "asset_entries",
           "investment_entries",
           "loan_entries",
-          "insurance_entries"
+          "insurance_entries",
+          "ledger_entries"
         ],
         "title": "SnapshotDetailResponse"
       },
@@ -1970,29 +1244,6 @@
           "created_at"
         ],
         "title": "SnapshotSummaryResponse"
-      },
-      "SyncTriggerResponse": {
-        "properties": {
-          "provider": {
-            "type": "string",
-            "title": "Provider"
-          },
-          "status": {
-            "type": "string",
-            "title": "Status"
-          },
-          "message": {
-            "type": "string",
-            "title": "Message"
-          }
-        },
-        "type": "object",
-        "required": [
-          "provider",
-          "status",
-          "message"
-        ],
-        "title": "SyncTriggerResponse"
       },
       "TrendPointResponse": {
         "properties": {
