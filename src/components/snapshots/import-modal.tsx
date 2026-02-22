@@ -48,19 +48,22 @@ export function ImportModal({ open, onOpenChange }: ImportModalProps) {
     if (selected) setFile(selected);
   }
 
-  function handleSubmit() {
+  function handleSubmit(force = false) {
     if (!file) return;
     mutation.mutate(
-      { file },
+      { file, force },
       {
         onSuccess: (data) => setResult(data),
       }
     );
   }
 
+  const is409 =
+    mutation.error instanceof ApiError && mutation.error.status === 409;
+
   const errorMessage =
     mutation.error instanceof ApiError
-      ? mutation.error.status === 409
+      ? is409
         ? "같은 날짜의 스냅샷이 이미 존재합니다."
         : mutation.error.message
       : mutation.error
@@ -158,13 +161,25 @@ export function ImportModal({ open, onOpenChange }: ImportModalProps) {
             )}
 
             {/* Submit */}
-            <Button
-              className="w-full"
-              onClick={handleSubmit}
-              disabled={!file || mutation.isPending}
-            >
-              {mutation.isPending ? "가져오는 중..." : "가져오기"}
-            </Button>
+            <div className="flex gap-2">
+              {is409 && (
+                <Button
+                  variant="destructive"
+                  className="w-full"
+                  onClick={() => handleSubmit(true)}
+                  disabled={mutation.isPending}
+                >
+                  {mutation.isPending ? "덮어쓰는 중..." : "덮어쓰기"}
+                </Button>
+              )}
+              <Button
+                className="w-full"
+                onClick={() => handleSubmit()}
+                disabled={!file || mutation.isPending}
+              >
+                {mutation.isPending ? "가져오는 중..." : "가져오기"}
+              </Button>
+            </div>
           </div>
         )}
       </DialogContent>

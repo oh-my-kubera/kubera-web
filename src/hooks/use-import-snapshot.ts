@@ -7,19 +7,21 @@ type SnapshotSummary = components["schemas"]["SnapshotSummaryResponse"];
 
 interface ImportParams {
   file: File;
+  force?: boolean;
 }
 
 export function useImportSnapshot() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ file }: ImportParams) => {
+    mutationFn: ({ file, force }: ImportParams) => {
       const formData = new FormData();
       formData.append("file", file);
 
       return apiUpload<SnapshotSummary>(
         "/api/v1/snapshots/import",
-        formData
+        formData,
+        force ? { force: "true" } : undefined
       );
     },
     onSuccess: () => {
