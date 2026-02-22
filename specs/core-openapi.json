@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Kubera",
-    "version": "0.2.1"
+    "version": "0.2.2"
   },
   "paths": {
     "/api/v1/health": {
@@ -48,6 +48,16 @@
                 }
               ],
               "title": "Password"
+            }
+          },
+          {
+            "name": "force",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Force"
             }
           }
         ],
@@ -686,12 +696,12 @@
         "properties": {
           "from_date": {
             "type": "string",
-            "format": "date",
+            "format": "date-time",
             "title": "From Date"
           },
           "to_date": {
             "type": "string",
-            "format": "date",
+            "format": "date-time",
             "title": "To Date"
           },
           "diff": {
@@ -1086,7 +1096,7 @@
           },
           "snapshot_date": {
             "type": "string",
-            "format": "date",
+            "format": "date-time",
             "title": "Snapshot Date"
           },
           "source": {
@@ -1118,6 +1128,17 @@
             "type": "string",
             "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
             "title": "Net Worth"
+          },
+          "filename_stem": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filename Stem"
           },
           "created_at": {
             "type": "string",
@@ -1170,6 +1191,7 @@
           "total_assets",
           "total_liabilities",
           "net_worth",
+          "filename_stem",
           "created_at",
           "asset_entries",
           "investment_entries",
@@ -1222,7 +1244,7 @@
           },
           "snapshot_date": {
             "type": "string",
-            "format": "date",
+            "format": "date-time",
             "title": "Snapshot Date"
           },
           "source": {
@@ -1255,6 +1277,17 @@
             "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
             "title": "Net Worth"
           },
+          "filename_stem": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filename Stem"
+          },
           "created_at": {
             "type": "string",
             "format": "date-time",
@@ -1271,6 +1304,7 @@
           "total_assets",
           "total_liabilities",
           "net_worth",
+          "filename_stem",
           "created_at"
         ],
         "title": "SnapshotSummaryResponse"
@@ -1279,7 +1313,7 @@
         "properties": {
           "snapshot_date": {
             "type": "string",
-            "format": "date",
+            "format": "date-time",
             "title": "Snapshot Date"
           },
           "credit_score": {
