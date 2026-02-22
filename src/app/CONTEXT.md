@@ -4,24 +4,19 @@ App Router pages. Each route is a directory with `page.tsx`.
 
 ## Routes
 
-| Route | Purpose |
-|-------|---------|
-| `/` | Main dashboard — total assets, pie chart, trend line, recent transactions |
-| `/connect` | Server connection — QR scan, pairing code, direct URL input |
-| `/assets` | Asset detail — per-account balances, trend graphs (daily/monthly/yearly) |
-| `/finance` | Bank/card transactions — tables, category chart, CSV upload |
-| `/backtest` | Backtest runner — strategy select, parameter sliders, equity chart, metrics |
-| `/strategy` | Strategy management — list, configure parameters |
-| `/trading` | Live trading — running strategies, positions, orders, kill switch |
+| Route | Purpose | Data |
+|-------|---------|------|
+| `/` | Dashboard — total assets + category breakdown | `AssetSummary` API via ConnectionGuard |
+| `/connect` | Server connection form (URL + token, test, save) | localStorage only |
+| `/snapshots` | Snapshot list, import modal, trend chart | Snapshot APIs via ConnectionGuard |
+| `/snapshots/[id]` | Single snapshot detail (summary, tables, charts) | Snapshot detail API |
+| `/exchange` | Live exchange balances (Upbit) | Exchange API via ConnectionGuard |
 
-## Server connection
+## Patterns
 
-The backend URL is not hardcoded. Users connect via:
-
-1. QR scan — camera reads `{url, token}`, stores in localStorage
-2. Pairing code — 4-digit code fetches URL from Cloudflare Workers relay
-3. Direct input — manual URL + token entry
-4. Recent connection — auto-stored, one-click reconnect
+- Server components by default; client components extracted as separate files (e.g. `dashboard.tsx`, `connect-form.tsx`)
+- Data-dependent pages wrap content with `<ConnectionGuard>` to show connect CTA when disconnected
+- `/connect` is the only page that must NOT use ConnectionGuard
 
 ## Providers
 

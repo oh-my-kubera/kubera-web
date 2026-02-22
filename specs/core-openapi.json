@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Kubera",
-    "version": "0.1.0"
+    "version": "0.3.1"
   },
   "paths": {
     "/api/v1/health": {
@@ -21,39 +21,221 @@
         }
       }
     },
-    "/api/v1/assets/summary": {
+    "/api/v1/snapshots/import": {
+      "post": {
+        "tags": [
+          "snapshots"
+        ],
+        "summary": "Import Snapshot",
+        "operationId": "import_snapshot_api_v1_snapshots_import_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "password",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Password"
+            }
+          },
+          {
+            "name": "force",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Force"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_import_snapshot_api_v1_snapshots_import_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SnapshotSummaryResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/snapshots/trend": {
       "get": {
         "tags": [
-          "assets"
+          "snapshots"
         ],
-        "summary": "Get Summary",
-        "operationId": "get_summary_api_v1_assets_summary_get",
+        "summary": "Get Trend",
+        "operationId": "get_trend_api_v1_snapshots_trend_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Start"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "End"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AssetSummary"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TrendPointResponse"
+                  },
+                  "title": "Response Get Trend Api V1 Snapshots Trend Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
             }
           }
-        },
+        }
+      }
+    },
+    "/api/v1/snapshots/compare": {
+      "get": {
+        "tags": [
+          "snapshots"
+        ],
+        "summary": "Compare Snapshots",
+        "operationId": "compare_snapshots_api_v1_snapshots_compare_get",
         "security": [
           {
             "HTTPBearer": []
           }
-        ]
+        ],
+        "parameters": [
+          {
+            "name": "from_date",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "title": "From Date"
+            }
+          },
+          {
+            "name": "to_date",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "title": "To Date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompareResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
       }
     },
-    "/api/v1/assets/snapshots": {
+    "/api/v1/snapshots": {
       "get": {
         "tags": [
-          "assets"
+          "snapshots"
         ],
         "summary": "List Snapshots",
-        "operationId": "list_snapshots_api_v1_assets_snapshots_get",
+        "operationId": "list_snapshots_api_v1_snapshots_get",
         "security": [
           {
             "HTTPBearer": []
@@ -124,58 +306,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PaginatedResponse_SnapshotResponse_"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "assets"
-        ],
-        "summary": "Create Snapshot",
-        "operationId": "create_snapshot_api_v1_assets_snapshots_post",
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "anyOf": [
-                  {
-                    "$ref": "#/components/schemas/SnapshotCreate"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ],
-                "title": "Body"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SnapshotResponse"
+                  "$ref": "#/components/schemas/PaginatedResponse_SnapshotSummaryResponse_"
                 }
               }
             }
@@ -193,19 +324,28 @@
         }
       }
     },
-    "/api/v1/assets": {
+    "/api/v1/snapshots/{snapshot_id}/ledger": {
       "get": {
         "tags": [
-          "assets"
+          "snapshots"
         ],
-        "summary": "List Assets",
-        "operationId": "list_assets_api_v1_assets_get",
+        "summary": "Get Ledger Entries",
+        "operationId": "get_ledger_entries_api_v1_snapshots__snapshot_id__ledger_get",
         "security": [
           {
             "HTTPBearer": []
           }
         ],
         "parameters": [
+          {
+            "name": "snapshot_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Snapshot Id"
+            }
+          },
           {
             "name": "page",
             "in": "query",
@@ -225,7 +365,7 @@
               "type": "integer",
               "maximum": 100,
               "minimum": 1,
-              "default": 20,
+              "default": 50,
               "title": "Size"
             }
           }
@@ -236,51 +376,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PaginatedResponse_AssetResponse_"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "assets"
-        ],
-        "summary": "Create Asset",
-        "operationId": "create_asset_api_v1_assets_post",
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AssetCreate"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AssetResponse"
+                  "$ref": "#/components/schemas/PaginatedResponse_LedgerEntryResponse_"
                 }
               }
             }
@@ -298,13 +394,13 @@
         }
       }
     },
-    "/api/v1/assets/{asset_id}": {
+    "/api/v1/snapshots/{snapshot_id}": {
       "get": {
         "tags": [
-          "assets"
+          "snapshots"
         ],
-        "summary": "Get Asset",
-        "operationId": "get_asset_api_v1_assets__asset_id__get",
+        "summary": "Get Snapshot",
+        "operationId": "get_snapshot_api_v1_snapshots__snapshot_id__get",
         "security": [
           {
             "HTTPBearer": []
@@ -312,12 +408,12 @@
         ],
         "parameters": [
           {
-            "name": "asset_id",
+            "name": "snapshot_id",
             "in": "path",
             "required": true,
             "schema": {
               "type": "integer",
-              "title": "Asset Id"
+              "title": "Snapshot Id"
             }
           }
         ],
@@ -327,62 +423,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AssetResponse"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "assets"
-        ],
-        "summary": "Update Asset",
-        "operationId": "update_asset_api_v1_assets__asset_id__put",
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "asset_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "title": "Asset Id"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AssetUpdate"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AssetResponse"
+                  "$ref": "#/components/schemas/SnapshotDetailResponse"
                 }
               }
             }
@@ -401,10 +442,10 @@
       },
       "delete": {
         "tags": [
-          "assets"
+          "snapshots"
         ],
-        "summary": "Delete Asset",
-        "operationId": "delete_asset_api_v1_assets__asset_id__delete",
+        "summary": "Delete Snapshot",
+        "operationId": "delete_snapshot_api_v1_snapshots__snapshot_id__delete",
         "security": [
           {
             "HTTPBearer": []
@@ -412,12 +453,12 @@
         ],
         "parameters": [
           {
-            "name": "asset_id",
+            "name": "snapshot_id",
             "in": "path",
             "required": true,
             "schema": {
               "type": "integer",
-              "title": "Asset Id"
+              "title": "Snapshot Id"
             }
           }
         ],
@@ -438,14 +479,119 @@
         }
       }
     },
-    "/api/v1/credentials": {
+    "/api/v1/snapshots/{snapshot_id}/assets": {
+      "post": {
+        "tags": [
+          "snapshots"
+        ],
+        "summary": "Add Asset Entry",
+        "operationId": "add_asset_entry_api_v1_snapshots__snapshot_id__assets_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "snapshot_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Snapshot Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssetEntryCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssetEntryResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/snapshots/{snapshot_id}/assets/{entry_id}": {
+      "delete": {
+        "tags": [
+          "snapshots"
+        ],
+        "summary": "Delete Asset Entry",
+        "operationId": "delete_asset_entry_api_v1_snapshots__snapshot_id__assets__entry_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "snapshot_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Snapshot Id"
+            }
+          },
+          {
+            "name": "entry_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Entry Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/exchange/upbit/balances": {
       "get": {
         "tags": [
-          "credentials"
+          "exchange"
         ],
-        "summary": "List Credentials",
-        "description": "List credentials with status only \u2014 no keys exposed.",
-        "operationId": "list_credentials_api_v1_credentials_get",
+        "summary": "Get Upbit Balances",
+        "operationId": "get_upbit_balances_api_v1_exchange_upbit_balances_get",
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -453,10 +599,10 @@
               "application/json": {
                 "schema": {
                   "items": {
-                    "$ref": "#/components/schemas/CredentialStatus"
+                    "$ref": "#/components/schemas/UpbitBalanceResponse"
                   },
                   "type": "array",
-                  "title": "Response List Credentials Api V1 Credentials Get"
+                  "title": "Response Get Upbit Balances Api V1 Exchange Upbit Balances Get"
                 }
               }
             }
@@ -468,327 +614,21 @@
           }
         ]
       }
-    },
-    "/api/v1/credentials/{provider}/sync": {
-      "post": {
-        "tags": [
-          "credentials"
-        ],
-        "summary": "Trigger Sync",
-        "description": "Trigger sync for a provider (placeholder).",
-        "operationId": "trigger_sync_api_v1_credentials__provider__sync_post",
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "provider",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Provider"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SyncTriggerResponse"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/finance/bank": {
-      "get": {
-        "tags": [
-          "finance"
-        ],
-        "summary": "List Bank Transactions",
-        "operationId": "list_bank_transactions_api_v1_finance_bank_get",
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "asset_id",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "integer"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Asset Id"
-            }
-          },
-          {
-            "name": "start",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Start"
-            }
-          },
-          {
-            "name": "end",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "End"
-            }
-          },
-          {
-            "name": "category",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Category"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "default": 1,
-              "title": "Page"
-            }
-          },
-          {
-            "name": "size",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "maximum": 100,
-              "minimum": 1,
-              "default": 20,
-              "title": "Size"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PaginatedResponse_BankTransactionResponse_"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/finance/card": {
-      "get": {
-        "tags": [
-          "finance"
-        ],
-        "summary": "List Card Transactions",
-        "operationId": "list_card_transactions_api_v1_finance_card_get",
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "asset_id",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "integer"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Asset Id"
-            }
-          },
-          {
-            "name": "start",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Start"
-            }
-          },
-          {
-            "name": "end",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "End"
-            }
-          },
-          {
-            "name": "category",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "title": "Category"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "default": 1,
-              "title": "Page"
-            }
-          },
-          {
-            "name": "size",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "maximum": 100,
-              "minimum": 1,
-              "default": 20,
-              "title": "Size"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PaginatedResponse_CardTransactionResponse_"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
     "schemas": {
-      "AssetCreate": {
+      "AssetEntryCreate": {
         "properties": {
-          "name": {
+          "category": {
             "type": "string",
-            "title": "Name"
+            "title": "Category"
           },
-          "type": {
-            "$ref": "#/components/schemas/AssetType"
-          },
-          "institution": {
+          "product_name": {
             "type": "string",
-            "title": "Institution",
-            "default": ""
+            "title": "Product Name"
           },
-          "balance": {
+          "amount": {
             "anyOf": [
               {
                 "type": "number"
@@ -798,347 +638,83 @@
                 "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
               }
             ],
-            "title": "Balance",
-            "default": "0"
-          },
-          "currency": {
-            "$ref": "#/components/schemas/Currency",
-            "default": "KRW"
-          }
-        },
-        "type": "object",
-        "required": [
-          "name",
-          "type"
-        ],
-        "title": "AssetCreate"
-      },
-      "AssetResponse": {
-        "properties": {
-          "id": {
-            "type": "integer",
-            "title": "Id"
-          },
-          "user_id": {
-            "type": "string",
-            "title": "User Id"
-          },
-          "name": {
-            "type": "string",
-            "title": "Name"
-          },
-          "type": {
-            "$ref": "#/components/schemas/AssetType"
-          },
-          "institution": {
-            "type": "string",
-            "title": "Institution"
-          },
-          "balance": {
-            "type": "string",
-            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
-            "title": "Balance"
-          },
-          "currency": {
-            "$ref": "#/components/schemas/Currency"
-          },
-          "last_synced": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Last Synced"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Created At"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Updated At"
-          }
-        },
-        "type": "object",
-        "required": [
-          "id",
-          "user_id",
-          "name",
-          "type",
-          "institution",
-          "balance",
-          "currency",
-          "last_synced",
-          "created_at",
-          "updated_at"
-        ],
-        "title": "AssetResponse"
-      },
-      "AssetSummary": {
-        "properties": {
-          "total_krw": {
-            "type": "string",
-            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
-            "title": "Total Krw"
-          },
-          "total_usd": {
-            "type": "string",
-            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
-            "title": "Total Usd"
-          },
-          "breakdown": {
-            "additionalProperties": {
-              "type": "string",
-              "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
-            },
-            "type": "object",
-            "title": "Breakdown"
-          }
-        },
-        "type": "object",
-        "required": [
-          "total_krw",
-          "total_usd",
-          "breakdown"
-        ],
-        "title": "AssetSummary"
-      },
-      "AssetType": {
-        "type": "string",
-        "enum": [
-          "BANK",
-          "STOCK",
-          "CRYPTO",
-          "CARD",
-          "CASH"
-        ],
-        "title": "AssetType"
-      },
-      "AssetUpdate": {
-        "properties": {
-          "name": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Name"
-          },
-          "type": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/AssetType"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "institution": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Institution"
-          },
-          "balance": {
-            "anyOf": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "string",
-                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Balance"
-          },
-          "currency": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/Currency"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        },
-        "type": "object",
-        "title": "AssetUpdate"
-      },
-      "BankTransactionResponse": {
-        "properties": {
-          "id": {
-            "type": "integer",
-            "title": "Id"
-          },
-          "user_id": {
-            "type": "string",
-            "title": "User Id"
-          },
-          "asset_id": {
-            "type": "integer",
-            "title": "Asset Id"
-          },
-          "date": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Date"
-          },
-          "description": {
-            "type": "string",
-            "title": "Description"
-          },
-          "amount": {
-            "type": "string",
-            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
             "title": "Amount"
-          },
-          "balance_after": {
-            "type": "string",
-            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
-            "title": "Balance After"
+          }
+        },
+        "type": "object",
+        "required": [
+          "category",
+          "product_name",
+          "amount"
+        ],
+        "title": "AssetEntryCreate"
+      },
+      "AssetEntryResponse": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
           },
           "category": {
             "type": "string",
             "title": "Category"
           },
-          "created_at": {
+          "product_name": {
             "type": "string",
-            "format": "date-time",
-            "title": "Created At"
-          }
-        },
-        "type": "object",
-        "required": [
-          "id",
-          "user_id",
-          "asset_id",
-          "date",
-          "description",
-          "amount",
-          "balance_after",
-          "category",
-          "created_at"
-        ],
-        "title": "BankTransactionResponse"
-      },
-      "CardTransactionResponse": {
-        "properties": {
-          "id": {
-            "type": "integer",
-            "title": "Id"
-          },
-          "user_id": {
-            "type": "string",
-            "title": "User Id"
-          },
-          "asset_id": {
-            "type": "integer",
-            "title": "Asset Id"
-          },
-          "date": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Date"
-          },
-          "merchant": {
-            "type": "string",
-            "title": "Merchant"
+            "title": "Product Name"
           },
           "amount": {
             "type": "string",
             "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
             "title": "Amount"
-          },
-          "category": {
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "category",
+          "product_name",
+          "amount"
+        ],
+        "title": "AssetEntryResponse"
+      },
+      "Body_import_snapshot_api_v1_snapshots_import_post": {
+        "properties": {
+          "file": {
             "type": "string",
-            "title": "Category"
-          },
-          "installment": {
-            "type": "integer",
-            "title": "Installment"
-          },
-          "created_at": {
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_import_snapshot_api_v1_snapshots_import_post"
+      },
+      "CompareResponse": {
+        "properties": {
+          "from_date": {
             "type": "string",
             "format": "date-time",
-            "title": "Created At"
-          }
-        },
-        "type": "object",
-        "required": [
-          "id",
-          "user_id",
-          "asset_id",
-          "date",
-          "merchant",
-          "amount",
-          "category",
-          "installment",
-          "created_at"
-        ],
-        "title": "CardTransactionResponse"
-      },
-      "CredentialStatus": {
-        "properties": {
-          "id": {
-            "type": "integer",
-            "title": "Id"
+            "title": "From Date"
           },
-          "provider": {
+          "to_date": {
             "type": "string",
-            "title": "Provider"
+            "format": "date-time",
+            "title": "To Date"
           },
-          "is_active": {
-            "type": "boolean",
-            "title": "Is Active"
-          },
-          "last_synced_at": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Last Synced At"
+          "diff": {
+            "$ref": "#/components/schemas/SnapshotDiff"
           }
         },
         "type": "object",
         "required": [
-          "id",
-          "provider",
-          "is_active",
-          "last_synced_at"
+          "from_date",
+          "to_date",
+          "diff"
         ],
-        "title": "CredentialStatus"
-      },
-      "Currency": {
-        "type": "string",
-        "enum": [
-          "KRW",
-          "USD"
-        ],
-        "title": "Currency"
+        "title": "CompareResponse"
       },
       "HTTPValidationError": {
         "properties": {
@@ -1153,157 +729,92 @@
         "type": "object",
         "title": "HTTPValidationError"
       },
-      "PaginatedResponse_AssetResponse_": {
+      "InsuranceEntryResponse": {
         "properties": {
-          "items": {
-            "items": {
-              "$ref": "#/components/schemas/AssetResponse"
-            },
-            "type": "array",
-            "title": "Items"
-          },
-          "total": {
+          "id": {
             "type": "integer",
-            "title": "Total"
+            "title": "Id"
           },
-          "page": {
-            "type": "integer",
-            "title": "Page"
+          "insurer": {
+            "type": "string",
+            "title": "Insurer"
           },
-          "size": {
-            "type": "integer",
-            "title": "Size"
+          "product_name": {
+            "type": "string",
+            "title": "Product Name"
           },
-          "pages": {
-            "type": "integer",
-            "title": "Pages"
-          }
-        },
-        "type": "object",
-        "required": [
-          "items",
-          "total",
-          "page",
-          "size",
-          "pages"
-        ],
-        "title": "PaginatedResponse[AssetResponse]"
-      },
-      "PaginatedResponse_BankTransactionResponse_": {
-        "properties": {
-          "items": {
-            "items": {
-              "$ref": "#/components/schemas/BankTransactionResponse"
-            },
-            "type": "array",
-            "title": "Items"
+          "status": {
+            "type": "string",
+            "title": "Status"
           },
-          "total": {
-            "type": "integer",
-            "title": "Total"
+          "total_paid": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Total Paid"
           },
-          "page": {
-            "type": "integer",
-            "title": "Page"
-          },
-          "size": {
-            "type": "integer",
-            "title": "Size"
-          },
-          "pages": {
-            "type": "integer",
-            "title": "Pages"
-          }
-        },
-        "type": "object",
-        "required": [
-          "items",
-          "total",
-          "page",
-          "size",
-          "pages"
-        ],
-        "title": "PaginatedResponse[BankTransactionResponse]"
-      },
-      "PaginatedResponse_CardTransactionResponse_": {
-        "properties": {
-          "items": {
-            "items": {
-              "$ref": "#/components/schemas/CardTransactionResponse"
-            },
-            "type": "array",
-            "title": "Items"
-          },
-          "total": {
-            "type": "integer",
-            "title": "Total"
-          },
-          "page": {
-            "type": "integer",
-            "title": "Page"
-          },
-          "size": {
-            "type": "integer",
-            "title": "Size"
-          },
-          "pages": {
-            "type": "integer",
-            "title": "Pages"
-          }
-        },
-        "type": "object",
-        "required": [
-          "items",
-          "total",
-          "page",
-          "size",
-          "pages"
-        ],
-        "title": "PaginatedResponse[CardTransactionResponse]"
-      },
-      "PaginatedResponse_SnapshotResponse_": {
-        "properties": {
-          "items": {
-            "items": {
-              "$ref": "#/components/schemas/SnapshotResponse"
-            },
-            "type": "array",
-            "title": "Items"
-          },
-          "total": {
-            "type": "integer",
-            "title": "Total"
-          },
-          "page": {
-            "type": "integer",
-            "title": "Page"
-          },
-          "size": {
-            "type": "integer",
-            "title": "Size"
-          },
-          "pages": {
-            "type": "integer",
-            "title": "Pages"
-          }
-        },
-        "type": "object",
-        "required": [
-          "items",
-          "total",
-          "page",
-          "size",
-          "pages"
-        ],
-        "title": "PaginatedResponse[SnapshotResponse]"
-      },
-      "SnapshotCreate": {
-        "properties": {
-          "total_krw": {
+          "start_date": {
             "anyOf": [
               {
-                "type": "number"
+                "type": "string",
+                "format": "date"
               },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start Date"
+          },
+          "end_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Date"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "insurer",
+          "product_name",
+          "status",
+          "total_paid",
+          "start_date",
+          "end_date"
+        ],
+        "title": "InsuranceEntryResponse"
+      },
+      "InvestmentEntryResponse": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "broker": {
+            "type": "string",
+            "title": "Broker"
+          },
+          "product_name": {
+            "type": "string",
+            "title": "Product Name"
+          },
+          "invested_amount": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Invested Amount"
+          },
+          "current_value": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Current Value"
+          },
+          "return_rate": {
+            "anyOf": [
               {
                 "type": "string",
                 "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
@@ -1312,26 +823,268 @@
                 "type": "null"
               }
             ],
-            "title": "Total Krw"
+            "title": "Return Rate"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "broker",
+          "product_name",
+          "invested_amount",
+          "current_value",
+          "return_rate"
+        ],
+        "title": "InvestmentEntryResponse"
+      },
+      "LedgerEntryResponse": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
           },
-          "breakdown": {
+          "entry_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Entry Date"
+          },
+          "entry_time": {
             "anyOf": [
               {
-                "additionalProperties": true,
-                "type": "object"
+                "type": "string",
+                "format": "time"
               },
               {
                 "type": "null"
               }
             ],
-            "title": "Breakdown"
+            "title": "Entry Time"
+          },
+          "entry_type": {
+            "type": "string",
+            "title": "Entry Type"
+          },
+          "major_category": {
+            "type": "string",
+            "title": "Major Category"
+          },
+          "minor_category": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Minor Category"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "amount": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Amount"
+          },
+          "currency": {
+            "type": "string",
+            "title": "Currency"
+          },
+          "payment_method": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Payment Method"
+          },
+          "memo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Memo"
           }
         },
         "type": "object",
-        "title": "SnapshotCreate",
-        "description": "Optional manual override for snapshot."
+        "required": [
+          "id",
+          "entry_date",
+          "entry_time",
+          "entry_type",
+          "major_category",
+          "minor_category",
+          "description",
+          "amount",
+          "currency",
+          "payment_method",
+          "memo"
+        ],
+        "title": "LedgerEntryResponse"
       },
-      "SnapshotResponse": {
+      "LoanEntryResponse": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "lender": {
+            "type": "string",
+            "title": "Lender"
+          },
+          "product_name": {
+            "type": "string",
+            "title": "Product Name"
+          },
+          "principal": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Principal"
+          },
+          "balance": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Balance"
+          },
+          "interest_rate": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interest Rate"
+          },
+          "start_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start Date"
+          },
+          "end_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Date"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "lender",
+          "product_name",
+          "principal",
+          "balance",
+          "interest_rate",
+          "start_date",
+          "end_date"
+        ],
+        "title": "LoanEntryResponse"
+      },
+      "PaginatedResponse_LedgerEntryResponse_": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/LedgerEntryResponse"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "size": {
+            "type": "integer",
+            "title": "Size"
+          },
+          "pages": {
+            "type": "integer",
+            "title": "Pages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "total",
+          "page",
+          "size",
+          "pages"
+        ],
+        "title": "PaginatedResponse[LedgerEntryResponse]"
+      },
+      "PaginatedResponse_SnapshotSummaryResponse_": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/SnapshotSummaryResponse"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "page": {
+            "type": "integer",
+            "title": "Page"
+          },
+          "size": {
+            "type": "integer",
+            "title": "Size"
+          },
+          "pages": {
+            "type": "integer",
+            "title": "Pages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "total",
+          "page",
+          "size",
+          "pages"
+        ],
+        "title": "PaginatedResponse[SnapshotSummaryResponse]"
+      },
+      "SnapshotDetailResponse": {
         "properties": {
           "id": {
             "type": "integer",
@@ -1341,27 +1094,199 @@
             "type": "string",
             "title": "User Id"
           },
-          "date": {
+          "snapshot_date": {
             "type": "string",
-            "format": "date",
-            "title": "Date"
+            "format": "date-time",
+            "title": "Snapshot Date"
           },
-          "total_krw": {
+          "source": {
             "type": "string",
-            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
-            "title": "Total Krw"
+            "title": "Source"
           },
-          "breakdown": {
+          "credit_score": {
             "anyOf": [
               {
-                "additionalProperties": true,
-                "type": "object"
+                "type": "integer"
               },
               {
                 "type": "null"
               }
             ],
-            "title": "Breakdown"
+            "title": "Credit Score"
+          },
+          "total_assets": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Total Assets"
+          },
+          "total_liabilities": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Total Liabilities"
+          },
+          "net_worth": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Net Worth"
+          },
+          "filename_stem": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filename Stem"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "asset_entries": {
+            "items": {
+              "$ref": "#/components/schemas/AssetEntryResponse"
+            },
+            "type": "array",
+            "title": "Asset Entries"
+          },
+          "investment_entries": {
+            "items": {
+              "$ref": "#/components/schemas/InvestmentEntryResponse"
+            },
+            "type": "array",
+            "title": "Investment Entries"
+          },
+          "loan_entries": {
+            "items": {
+              "$ref": "#/components/schemas/LoanEntryResponse"
+            },
+            "type": "array",
+            "title": "Loan Entries"
+          },
+          "insurance_entries": {
+            "items": {
+              "$ref": "#/components/schemas/InsuranceEntryResponse"
+            },
+            "type": "array",
+            "title": "Insurance Entries"
+          },
+          "ledger_entries": {
+            "items": {
+              "$ref": "#/components/schemas/LedgerEntryResponse"
+            },
+            "type": "array",
+            "title": "Ledger Entries"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "user_id",
+          "snapshot_date",
+          "source",
+          "credit_score",
+          "total_assets",
+          "total_liabilities",
+          "net_worth",
+          "filename_stem",
+          "created_at",
+          "asset_entries",
+          "investment_entries",
+          "loan_entries",
+          "insurance_entries",
+          "ledger_entries"
+        ],
+        "title": "SnapshotDetailResponse"
+      },
+      "SnapshotDiff": {
+        "properties": {
+          "credit_score": {
+            "type": "integer",
+            "title": "Credit Score"
+          },
+          "total_assets": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Total Assets"
+          },
+          "total_liabilities": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Total Liabilities"
+          },
+          "net_worth": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Net Worth"
+          }
+        },
+        "type": "object",
+        "required": [
+          "credit_score",
+          "total_assets",
+          "total_liabilities",
+          "net_worth"
+        ],
+        "title": "SnapshotDiff"
+      },
+      "SnapshotSummaryResponse": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          },
+          "snapshot_date": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Snapshot Date"
+          },
+          "source": {
+            "type": "string",
+            "title": "Source"
+          },
+          "credit_score": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Credit Score"
+          },
+          "total_assets": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Total Assets"
+          },
+          "total_liabilities": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Total Liabilities"
+          },
+          "net_worth": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Net Worth"
+          },
+          "filename_stem": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filename Stem"
           },
           "created_at": {
             "type": "string",
@@ -1373,35 +1298,98 @@
         "required": [
           "id",
           "user_id",
-          "date",
-          "total_krw",
-          "breakdown",
+          "snapshot_date",
+          "source",
+          "credit_score",
+          "total_assets",
+          "total_liabilities",
+          "net_worth",
+          "filename_stem",
           "created_at"
         ],
-        "title": "SnapshotResponse"
+        "title": "SnapshotSummaryResponse"
       },
-      "SyncTriggerResponse": {
+      "TrendPointResponse": {
         "properties": {
-          "provider": {
+          "snapshot_date": {
             "type": "string",
-            "title": "Provider"
+            "format": "date-time",
+            "title": "Snapshot Date"
           },
-          "status": {
-            "type": "string",
-            "title": "Status"
+          "credit_score": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Credit Score"
           },
-          "message": {
+          "total_assets": {
             "type": "string",
-            "title": "Message"
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Total Assets"
+          },
+          "total_liabilities": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Total Liabilities"
+          },
+          "net_worth": {
+            "type": "string",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Net Worth"
           }
         },
         "type": "object",
         "required": [
-          "provider",
-          "status",
-          "message"
+          "snapshot_date",
+          "credit_score",
+          "total_assets",
+          "total_liabilities",
+          "net_worth"
         ],
-        "title": "SyncTriggerResponse"
+        "title": "TrendPointResponse"
+      },
+      "UpbitBalanceResponse": {
+        "properties": {
+          "currency": {
+            "type": "string",
+            "title": "Currency"
+          },
+          "balance": {
+            "type": "string",
+            "title": "Balance"
+          },
+          "locked": {
+            "type": "string",
+            "title": "Locked"
+          },
+          "avg_buy_price": {
+            "type": "string",
+            "title": "Avg Buy Price"
+          },
+          "avg_buy_price_modified": {
+            "type": "boolean",
+            "title": "Avg Buy Price Modified"
+          },
+          "unit_currency": {
+            "type": "string",
+            "title": "Unit Currency"
+          }
+        },
+        "type": "object",
+        "required": [
+          "currency",
+          "balance",
+          "locked",
+          "avg_buy_price",
+          "avg_buy_price_modified",
+          "unit_currency"
+        ],
+        "title": "UpbitBalanceResponse"
       },
       "ValidationError": {
         "properties": {

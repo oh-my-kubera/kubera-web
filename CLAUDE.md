@@ -8,6 +8,12 @@
 - `develop` — default branch, all PRs target here (including openapi.json updates)
 - `main` — production, Vercel auto-deploys
 
+## Testing
+- Vitest + React Testing Library + jsdom
+- `npm run test` / `npm run test:watch`
+- Colocate test files: `foo.test.ts(x)` next to source
+- Test `@/lib/*` utilities and custom hooks at minimum
+
 ## Rules
 - Use `@/*` path alias (maps to `./src/*`)
 - API calls must use `api<T>()` from `@/lib/api` — never raw fetch

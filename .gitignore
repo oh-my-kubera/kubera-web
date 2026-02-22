@@ -38,3 +38,5 @@ next-env.d.ts
 # local tool config
 .claude/
 .omc/
+
+.vercel

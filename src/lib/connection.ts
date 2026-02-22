@@ -31,8 +31,18 @@ export function getConnection(): ServerConnection | null {
 }
 
 export function saveConnection(conn: ServerConnection): void {
-  localStorage.setItem(CONNECTION_KEY, JSON.stringify(conn));
-  addToRecent(conn);
+  const sanitized: ServerConnection = {
+    url: sanitizeHeaderValue(conn.url),
+    token: sanitizeHeaderValue(conn.token),
+  };
+  localStorage.setItem(CONNECTION_KEY, JSON.stringify(sanitized));
+  addToRecent(sanitized);
+}
+
+/** Strip non-ISO-8859-1 characters that cause fetch header errors. */
+export function sanitizeHeaderValue(value: string): string {
+  // eslint-disable-next-line no-control-regex
+  return value.replace(/[^\x00-\xFF]/g, "").trim();
 }
 
 export function clearConnection(): void {
@@ -40,6 +50,7 @@ export function clearConnection(): void {
 }
 
 export function getRecentConnections(): ServerConnection[] {
+  if (typeof window === "undefined") return [];
   const raw = localStorage.getItem(RECENT_CONNECTIONS_KEY);
   if (!raw) return [];
   try {
