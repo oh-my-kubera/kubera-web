@@ -208,12 +208,12 @@ export interface components {
         CompareResponse: {
             /**
              * From Date
-             * Format: date
+             * Format: date-time
              */
             from_date: string;
             /**
              * To Date
-             * Format: date
+             * Format: date-time
              */
             to_date: string;
             diff: components["schemas"]["SnapshotDiff"];
@@ -336,7 +336,7 @@ export interface components {
             user_id: string;
             /**
              * Snapshot Date
-             * Format: date
+             * Format: date-time
              */
             snapshot_date: string;
             /** Source */
@@ -349,6 +349,8 @@ export interface components {
             total_liabilities: string;
             /** Net Worth */
             net_worth: string;
+            /** Filename Stem */
+            filename_stem: string | null;
             /**
              * Created At
              * Format: date-time
@@ -384,7 +386,7 @@ export interface components {
             user_id: string;
             /**
              * Snapshot Date
-             * Format: date
+             * Format: date-time
              */
             snapshot_date: string;
             /** Source */
@@ -397,6 +399,8 @@ export interface components {
             total_liabilities: string;
             /** Net Worth */
             net_worth: string;
+            /** Filename Stem */
+            filename_stem: string | null;
             /**
              * Created At
              * Format: date-time
@@ -407,7 +411,7 @@ export interface components {
         TrendPointResponse: {
             /**
              * Snapshot Date
-             * Format: date
+             * Format: date-time
              */
             snapshot_date: string;
             /** Credit Score */
@@ -480,6 +484,7 @@ export interface operations {
         parameters: {
             query?: {
                 password?: string | null;
+                force?: boolean;
             };
             header?: never;
             path?: never;
