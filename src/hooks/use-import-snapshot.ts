@@ -7,24 +7,19 @@ type SnapshotSummary = components["schemas"]["SnapshotSummaryResponse"];
 
 interface ImportParams {
   file: File;
-  password?: string;
 }
 
 export function useImportSnapshot() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ file, password }: ImportParams) => {
+    mutationFn: ({ file }: ImportParams) => {
       const formData = new FormData();
       formData.append("file", file);
 
-      const queryParams: Record<string, string> = {};
-      if (password) queryParams.password = password;
-
       return apiUpload<SnapshotSummary>(
         "/api/v1/snapshots/import",
-        formData,
-        queryParams
+        formData
       );
     },
     onSuccess: () => {

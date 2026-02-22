@@ -23,13 +23,11 @@ interface ImportModalProps {
 
 export function ImportModal({ open, onOpenChange }: ImportModalProps) {
   const [file, setFile] = useState<File | null>(null);
-  const [password, setPassword] = useState("");
   const [result, setResult] = useState<SnapshotSummary | null>(null);
   const mutation = useImportSnapshot();
 
   const reset = useCallback(() => {
     setFile(null);
-    setPassword("");
     setResult(null);
     mutation.reset();
   }, [mutation]);
@@ -53,7 +51,7 @@ export function ImportModal({ open, onOpenChange }: ImportModalProps) {
   function handleSubmit() {
     if (!file) return;
     mutation.mutate(
-      { file, password: password || undefined },
+      { file },
       {
         onSuccess: (data) => setResult(data),
       }
@@ -149,20 +147,6 @@ export function ImportModal({ open, onOpenChange }: ImportModalProps) {
                   </div>
                 </>
               )}
-            </div>
-
-            {/* Password */}
-            <div>
-              <label className="text-xs font-medium text-muted-foreground">
-                비밀번호 (선택)
-              </label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="암호화된 파일인 경우 입력"
-                className="mt-1 w-full rounded-md border border-border bg-background px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-ring"
-              />
             </div>
 
             {/* Error */}
