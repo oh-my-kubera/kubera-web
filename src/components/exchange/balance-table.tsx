@@ -1,4 +1,6 @@
-import { formatKRW } from "@/lib/utils";
+import { formatKRWCompact } from "@/lib/utils";
+import { FolderPlus } from "lucide-react";
+import { EmptyState } from "@/components/ui/empty-state";
 import type { components } from "@/lib/types/core";
 
 type UpbitBalance = components["schemas"]["UpbitBalanceResponse"];
@@ -14,9 +16,12 @@ export function BalanceTable({ balances }: BalanceTableProps) {
 
   if (filtered.length === 0) {
     return (
-      <p className="py-12 text-center text-sm text-muted-foreground">
-        보유 자산이 없습니다.
-      </p>
+      <EmptyState
+        icon={FolderPlus}
+        title="보유 자산이 없습니다"
+        description="현재 업비트 계좌에 보유 중인 활성 자산이 없습니다. 거래소에서 매수를 진행하면 여기에 표시됩니다."
+        className="min-h-[300px]"
+      />
     );
   }
 
@@ -35,26 +40,29 @@ export function BalanceTable({ balances }: BalanceTableProps) {
           {filtered.map((b) => {
             const isKRW = b.unit_currency === "KRW";
             return (
-              <tr key={b.currency} className="border-b border-border/50">
-                <td className="py-2.5 font-medium">{b.currency}</td>
-                <td className="py-2.5 text-right font-mono">
+              <tr
+                key={b.currency}
+                className="border-b border-border/50 transition-colors hover:bg-muted/50"
+              >
+                <td className="py-3 font-medium">{b.currency}</td>
+                <td className="py-3 text-right font-mono">
                   {parseFloat(b.balance).toLocaleString("ko-KR", {
                     maximumFractionDigits: 8,
                   })}
                 </td>
-                <td className="py-2.5 text-right font-mono text-muted-foreground">
+                <td className="py-3 text-right font-mono text-muted-foreground">
                   {parseFloat(b.locked) > 0
                     ? parseFloat(b.locked).toLocaleString("ko-KR", {
-                        maximumFractionDigits: 8,
-                      })
+                      maximumFractionDigits: 8,
+                    })
                     : "—"}
                 </td>
-                <td className="py-2.5 text-right font-mono">
+                <td className="py-3 text-right font-mono">
                   {isKRW
-                    ? formatKRW(b.avg_buy_price)
+                    ? formatKRWCompact(b.avg_buy_price)
                     : parseFloat(b.avg_buy_price).toLocaleString("ko-KR", {
-                        maximumFractionDigits: 2,
-                      })}
+                      maximumFractionDigits: 2,
+                    })}
                 </td>
               </tr>
             );

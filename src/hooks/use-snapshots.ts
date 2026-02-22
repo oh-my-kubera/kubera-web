@@ -9,7 +9,7 @@ type TrendPoint = components["schemas"]["TrendPointResponse"];
 export const snapshotKeys = {
   all: ["snapshots"] as const,
   list: (page: number, size: number) => ["snapshots", "list", page, size] as const,
-  trend: () => ["snapshots", "trend"] as const,
+  trend: (start?: string, end?: string) => ["snapshots", "trend", start, end] as const,
   detail: (id: number) => ["snapshots", "detail", id] as const,
 };
 
@@ -21,10 +21,16 @@ export function useSnapshotList(page = 1, size = 20) {
   });
 }
 
-export function useSnapshotTrend() {
+export function useSnapshotTrend(start?: string, end?: string) {
   return useQuery({
-    queryKey: snapshotKeys.trend(),
-    queryFn: () => api<TrendPoint[]>("/api/v1/snapshots/trend"),
+    queryKey: snapshotKeys.trend(start, end),
+    queryFn: () => {
+      const params = new URLSearchParams();
+      if (start) params.append("start", start);
+      if (end) params.append("end", end);
+      const qs = params.toString() ? `?${params.toString()}` : "";
+      return api<TrendPoint[]>(`/api/v1/snapshots/trend${qs}`);
+    },
   });
 }
 
