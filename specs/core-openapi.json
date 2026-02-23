@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Kubera",
-    "version": "0.3.1"
+    "version": "0.4.0"
   },
   "paths": {
     "/api/v1/health": {
@@ -154,64 +154,6 @@
                     "$ref": "#/components/schemas/TrendPointResponse"
                   },
                   "title": "Response Get Trend Api V1 Snapshots Trend Get"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/snapshots/compare": {
-      "get": {
-        "tags": [
-          "snapshots"
-        ],
-        "summary": "Compare Snapshots",
-        "operationId": "compare_snapshots_api_v1_snapshots_compare_get",
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "from_date",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "date",
-              "title": "From Date"
-            }
-          },
-          {
-            "name": "to_date",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "date",
-              "title": "To Date"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CompareResponse"
                 }
               }
             }
@@ -614,6 +556,32 @@
           }
         ]
       }
+    },
+    "/api/v1/exchange/kis/balance": {
+      "get": {
+        "tags": [
+          "exchange"
+        ],
+        "summary": "Get Kis Balance",
+        "operationId": "get_kis_balance_api_v1_exchange_kis_balance_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KisBalanceSummaryResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -682,7 +650,7 @@
         "properties": {
           "file": {
             "type": "string",
-            "contentMediaType": "application/octet-stream",
+            "format": "binary",
             "title": "File"
           }
         },
@@ -691,30 +659,6 @@
           "file"
         ],
         "title": "Body_import_snapshot_api_v1_snapshots_import_post"
-      },
-      "CompareResponse": {
-        "properties": {
-          "from_date": {
-            "type": "string",
-            "format": "date-time",
-            "title": "From Date"
-          },
-          "to_date": {
-            "type": "string",
-            "format": "date-time",
-            "title": "To Date"
-          },
-          "diff": {
-            "$ref": "#/components/schemas/SnapshotDiff"
-          }
-        },
-        "type": "object",
-        "required": [
-          "from_date",
-          "to_date",
-          "diff"
-        ],
-        "title": "CompareResponse"
       },
       "HTTPValidationError": {
         "properties": {
@@ -836,6 +780,95 @@
           "return_rate"
         ],
         "title": "InvestmentEntryResponse"
+      },
+      "KisBalanceSummaryResponse": {
+        "properties": {
+          "holdings": {
+            "items": {
+              "$ref": "#/components/schemas/KisHoldingResponse"
+            },
+            "type": "array",
+            "title": "Holdings"
+          },
+          "tot_evlu_amt": {
+            "type": "string",
+            "title": "Tot Evlu Amt"
+          },
+          "pchs_amt_smtl_amt": {
+            "type": "string",
+            "title": "Pchs Amt Smtl Amt"
+          },
+          "evlu_pfls_smtl_amt": {
+            "type": "string",
+            "title": "Evlu Pfls Smtl Amt"
+          },
+          "nass_amt": {
+            "type": "string",
+            "title": "Nass Amt"
+          }
+        },
+        "type": "object",
+        "required": [
+          "holdings",
+          "tot_evlu_amt",
+          "pchs_amt_smtl_amt",
+          "evlu_pfls_smtl_amt",
+          "nass_amt"
+        ],
+        "title": "KisBalanceSummaryResponse"
+      },
+      "KisHoldingResponse": {
+        "properties": {
+          "pdno": {
+            "type": "string",
+            "title": "Pdno"
+          },
+          "prdt_name": {
+            "type": "string",
+            "title": "Prdt Name"
+          },
+          "hldg_qty": {
+            "type": "string",
+            "title": "Hldg Qty"
+          },
+          "pchs_avg_pric": {
+            "type": "string",
+            "title": "Pchs Avg Pric"
+          },
+          "pchs_amt": {
+            "type": "string",
+            "title": "Pchs Amt"
+          },
+          "prpr": {
+            "type": "string",
+            "title": "Prpr"
+          },
+          "evlu_amt": {
+            "type": "string",
+            "title": "Evlu Amt"
+          },
+          "evlu_pfls_amt": {
+            "type": "string",
+            "title": "Evlu Pfls Amt"
+          },
+          "evlu_pfls_rt": {
+            "type": "string",
+            "title": "Evlu Pfls Rt"
+          }
+        },
+        "type": "object",
+        "required": [
+          "pdno",
+          "prdt_name",
+          "hldg_qty",
+          "pchs_avg_pric",
+          "pchs_amt",
+          "prpr",
+          "evlu_amt",
+          "evlu_pfls_amt",
+          "evlu_pfls_rt"
+        ],
+        "title": "KisHoldingResponse"
       },
       "LedgerEntryResponse": {
         "properties": {
@@ -1173,12 +1206,10 @@
             "type": "array",
             "title": "Insurance Entries"
           },
-          "ledger_entries": {
-            "items": {
-              "$ref": "#/components/schemas/LedgerEntryResponse"
-            },
-            "type": "array",
-            "title": "Ledger Entries"
+          "ledger_count": {
+            "type": "integer",
+            "title": "Ledger Count",
+            "default": 0
           }
         },
         "type": "object",
@@ -1196,41 +1227,9 @@
           "asset_entries",
           "investment_entries",
           "loan_entries",
-          "insurance_entries",
-          "ledger_entries"
+          "insurance_entries"
         ],
         "title": "SnapshotDetailResponse"
-      },
-      "SnapshotDiff": {
-        "properties": {
-          "credit_score": {
-            "type": "integer",
-            "title": "Credit Score"
-          },
-          "total_assets": {
-            "type": "string",
-            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
-            "title": "Total Assets"
-          },
-          "total_liabilities": {
-            "type": "string",
-            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
-            "title": "Total Liabilities"
-          },
-          "net_worth": {
-            "type": "string",
-            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
-            "title": "Net Worth"
-          }
-        },
-        "type": "object",
-        "required": [
-          "credit_score",
-          "total_assets",
-          "total_liabilities",
-          "net_worth"
-        ],
-        "title": "SnapshotDiff"
       },
       "SnapshotSummaryResponse": {
         "properties": {
