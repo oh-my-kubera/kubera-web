@@ -51,18 +51,18 @@ describe("KisBalanceTable", () => {
     expect(headers[5]).toHaveTextContent("수익률");
   });
 
-  it("applies red text for positive profit", () => {
+  it("applies profit color for positive profit", () => {
     const { container } = render(<KisBalanceTable summary={SUMMARY} />);
 
-    const redCells = container.querySelectorAll(".text-red-500");
-    expect(redCells.length).toBeGreaterThan(0);
+    const profitCells = container.querySelectorAll('[class*="--stock-profit"]');
+    expect(profitCells.length).toBeGreaterThan(0);
   });
 
-  it("applies blue text for negative profit", () => {
+  it("applies loss color for negative profit", () => {
     const { container } = render(<KisBalanceTable summary={SUMMARY} />);
 
-    const blueCells = container.querySelectorAll(".text-blue-500");
-    expect(blueCells.length).toBeGreaterThan(0);
+    const lossCells = container.querySelectorAll('[class*="--stock-loss"]');
+    expect(lossCells.length).toBeGreaterThan(0);
   });
 
   it("renders footer with totals", () => {

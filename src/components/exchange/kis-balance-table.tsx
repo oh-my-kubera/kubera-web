@@ -66,9 +66,9 @@ export function KisBalanceTable({ summary }: KisBalanceTableProps) {
                 <td
                   className={`py-3 text-right font-mono ${
                     pfls > 0
-                      ? "text-red-500"
+                      ? "text-[hsl(var(--stock-profit))]"
                       : pfls < 0
-                        ? "text-blue-500"
+                        ? "text-[hsl(var(--stock-loss))]"
                         : ""
                   }`}
                 >
@@ -92,9 +92,9 @@ export function KisBalanceTable({ summary }: KisBalanceTableProps) {
             <td
               className={`pt-3 text-right font-mono text-xs ${
                 totalPfls > 0
-                  ? "text-red-500"
+                  ? "text-[hsl(var(--stock-profit))]"
                   : totalPfls < 0
-                    ? "text-blue-500"
+                    ? "text-[hsl(var(--stock-loss))]"
                     : ""
               }`}
             >

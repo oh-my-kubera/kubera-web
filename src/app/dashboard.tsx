@@ -7,50 +7,14 @@ import {
   useSnapshotTrend,
   useSnapshotDetail,
 } from "@/hooks/use-snapshots";
-import { formatKRWCompact, formatPercent, cn } from "@/lib/utils";
+import { formatKRWCompact } from "@/lib/utils";
 import { NetWorthChart } from "@/components/snapshots/net-worth-chart";
 import { AssetAllocation } from "@/components/snapshots/asset-allocation";
 import { SnapshotList } from "@/components/snapshots/snapshot-list";
+import { ChangeIndicator } from "@/components/ui/change-indicator";
 import { EmptyState } from "@/components/ui/empty-state";
-import { FolderPlus, TrendingUp, TrendingDown, Minus } from "lucide-react";
+import { FolderPlus } from "lucide-react";
 import { useRouter } from "next/navigation";
-
-function ChangeIndicator({
-  diff,
-  percent,
-  invertColor,
-  unit,
-}: {
-  diff: number;
-  percent: number | null;
-  invertColor?: boolean;
-  unit?: string;
-}) {
-  const isZero = diff === 0;
-  const isGood = invertColor ? diff < 0 : diff > 0;
-  const Icon = isZero ? Minus : isGood ? TrendingUp : TrendingDown;
-  const colorClass = isZero
-    ? "text-muted-foreground"
-    : isGood
-      ? "text-[hsl(var(--positive))]"
-      : "text-[hsl(var(--negative))]";
-
-  const label = unit
-    ? `${diff > 0 ? "+" : ""}${diff}${unit}`
-    : formatPercent(percent);
-
-  return (
-    <span
-      className={cn(
-        "inline-flex items-center gap-0.5 text-xs font-medium",
-        colorClass,
-      )}
-    >
-      <Icon className="h-3 w-3" />
-      {label}
-    </span>
-  );
-}
 
 function DashboardContent() {
   const list = useSnapshotList(1, 5);
